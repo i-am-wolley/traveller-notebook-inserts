@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Booklet builder — Traveller's Notebook inserts</title>
+<meta name="description" content="Pick inserts, arrange them, and download a
+print-exact imposed PDF for a saddle-stitched Traveller's Notebook booklet.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><text y='13' font-size='13'>📓</text></svg>">
+<link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <h1>Booklet builder</h1>
+    <p>Pick the inserts you want, put them in order, and get a print-exact
+      PDF — imposed onto A4 with cut and fold marks, ready to fold into a
+      saddle-stitched Traveller's Notebook booklet.</p>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section class="step">
+    <h2><span class="n">1</span> Size</h2>
+    <div class="sizes" id="sizes"></div>
+  </section>
+
+  <section class="step">
+    <h2><span class="n">2</span> Inserts</h2>
+    <p class="hint">Click to add a page to the end of your booklet. Grids,
+      notes and sudoku can be added as many times as you like.</p>
+    <div class="catalogue" id="catalogue"></div>
+    <p class="hint">Or start from a ready-made booklet:
+      <button class="link" id="preset">the full Year Book</button> ·
+      <button class="link" id="clear">clear everything</button></p>
+  </section>
+
+  <section class="step">
+    <h2><span class="n">3</span> Arrange</h2>
+    <div class="arrange">
+      <div>
+        <div class="count" id="count"></div>
+        <ol class="booklet" id="booklet"></ol>
+      </div>
+      <div class="previewbox">
+        <div class="pvhead">
+          <button id="prev" aria-label="Previous page">←</button>
+          <span id="pvlabel">—</span>
+          <button id="next" aria-label="Next page">→</button>
+        </div>
+        <canvas id="preview" aria-label="Page preview"></canvas>
+        <p class="hint" id="pvnote"></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="step">
+    <h2><span class="n">4</span> Download</h2>
+    <div class="downloads">
+      <button class="primary" id="dl-print">Print PDF — A4, imposed</button>
+      <button id="dl-read">Reading-order PDF</button>
+    </div>
+    <p class="hint" id="dlnote"></p>
+  </section>
+
+  <section class="step notes">
+    <h2>Printing it</h2>
+    <ol class="how">
+      <li>Print the imposed PDF on A4 at <b>100% / Actual size</b> — never
+        “Fit to page”.</li>
+      <li>Double-sided, flipping on the <b>short edge</b> for regular and the
+        <b>long edge</b> for passport. Flip edges vary by driver, so hold a
+        sheet to the light: the back of page 1 must be page 2, the same way
+        up.</li>
+      <li>Trim the dashed cut lines, fold down the dashed centre, nest the
+        sheets in order, and staple through the fold.</li>
+    </ol>
+    <p class="hint">Blank pages are added automatically: one to keep a
+      two-page spread facing, and as many as it takes to reach a multiple of
+      four, which is what a folded booklet needs.</p>
+  </section>
+
+</main>
+
+<footer class="wrap">
+  <p>Greyscale, print-exact, generated in your browser — nothing is uploaded.
+    Coastline from <a href="https://www.naturalearthdata.com/">Natural
+    Earth</a>, public domain.</p>
+</footer>
+
+<script type="module" src="js/app.js"></script>
+</body>
+</html>

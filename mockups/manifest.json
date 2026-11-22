@@ -1,0 +1,194 @@
+[
+ {
+  "name": "regular-1-cover",
+  "size": "regular",
+  "kind": "cover",
+  "turned": false
+ },
+ {
+  "name": "regular-2-glance",
+  "size": "regular",
+  "kind": "glance",
+  "turned": true
+ },
+ {
+  "name": "regular-3-habits",
+  "size": "regular",
+  "kind": "habits",
+  "turned": false
+ },
+ {
+  "name": "regular-4-habits",
+  "size": "regular",
+  "kind": "habits",
+  "turned": false
+ },
+ {
+  "name": "regular-5-films",
+  "size": "regular",
+  "kind": "films",
+  "turned": true
+ },
+ {
+  "name": "regular-6-timezone",
+  "size": "regular",
+  "kind": "timezone",
+  "turned": false
+ },
+ {
+  "name": "regular-7-timezone",
+  "size": "regular",
+  "kind": "timezone",
+  "turned": false
+ },
+ {
+  "name": "regular-8-sudoku",
+  "size": "regular",
+  "kind": "sudoku",
+  "turned": false
+ },
+ {
+  "name": "regular-9-sudoku",
+  "size": "regular",
+  "kind": "sudoku",
+  "turned": false
+ },
+ {
+  "name": "regular-10-sudoku",
+  "size": "regular",
+  "kind": "sudoku",
+  "turned": false
+ },
+ {
+  "name": "regular-11-sudoku",
+  "size": "regular",
+  "kind": "sudoku",
+  "turned": false
+ },
+ {
+  "name": "regular-12-answers",
+  "size": "regular",
+  "kind": "answers",
+  "turned": false
+ },
+ {
+  "name": "regular-13-notes",
+  "size": "regular",
+  "kind": "notes",
+  "turned": false
+ },
+ {
+  "name": "regular-14-notes",
+  "size": "regular",
+  "kind": "notes",
+  "turned": false
+ },
+ {
+  "name": "regular-15-notes",
+  "size": "regular",
+  "kind": "notes",
+  "turned": false
+ },
+ {
+  "name": "regular-16-guide",
+  "size": "regular",
+  "kind": "guide",
+  "turned": false
+ },
+ {
+  "name": "passport-1-cover",
+  "size": "passport",
+  "kind": "cover",
+  "turned": false
+ },
+ {
+  "name": "passport-2-glance",
+  "size": "passport",
+  "kind": "glance",
+  "turned": true
+ },
+ {
+  "name": "passport-3-habits",
+  "size": "passport",
+  "kind": "habits",
+  "turned": false
+ },
+ {
+  "name": "passport-4-habits",
+  "size": "passport",
+  "kind": "habits",
+  "turned": false
+ },
+ {
+  "name": "passport-5-films",
+  "size": "passport",
+  "kind": "films",
+  "turned": true
+ },
+ {
+  "name": "passport-6-films",
+  "size": "passport",
+  "kind": "films",
+  "turned": true
+ },
+ {
+  "name": "passport-7-blank",
+  "size": "passport",
+  "kind": "blank",
+  "turned": false
+ },
+ {
+  "name": "passport-8-timezone",
+  "size": "passport",
+  "kind": "timezone",
+  "turned": false
+ },
+ {
+  "name": "passport-9-timezone",
+  "size": "passport",
+  "kind": "timezone",
+  "turned": false
+ },
+ {
+  "name": "passport-10-sudoku",
+  "size": "passport",
+  "kind": "sudoku",
+  "turned": false
+ },
+ {
+  "name": "passport-11-sudoku",
+  "size": "passport",
+  "kind": "sudoku",
+  "turned": false
+ },
+ {
+  "name": "passport-12-sudoku",
+  "size": "passport",
+  "kind": "sudoku",
+  "turned": false
+ },
+ {
+  "name": "passport-13-sudoku",
+  "size": "passport",
+  "kind": "sudoku",
+  "turned": false
+ },
+ {
+  "name": "passport-14-answers",
+  "size": "passport",
+  "kind": "answers",
+  "turned": false
+ },
+ {
+  "name": "passport-15-guide",
+  "size": "passport",
+  "kind": "guide",
+  "turned": false
+ },
+ {
+  "name": "passport-16-guide",
+  "size": "passport",
+  "kind": "guide",
+  "turned": false
+ }
+]

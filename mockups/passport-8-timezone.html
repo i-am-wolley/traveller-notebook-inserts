@@ -1,0 +1,283 @@
+<!doctype html><html><head><meta charset='utf-8'><title>passport page 8</title><style>
+@page { size: 89mm 124mm; margin: 0; }
+* { box-sizing: border-box; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+html, body { margin: 0; padding: 0; background: #fff; color: #2b2b2b; }
+body { font-family: "Helvetica Neue", Arial, sans-serif; font-size: 5.6pt; }
+
+.sheet { width: 89mm; height: 124mm; position: relative; overflow: hidden;
+         page-break-after: always; break-after: page; background: #fff; }
+.sheet:last-child { page-break-after: auto; break-after: auto; }
+.pad { position: absolute; top: 6mm; bottom: 6mm;
+       width: 76.5mm; height: 112mm; }
+.L .pad { left: 5.5mm; }
+.R .pad { left: 7mm; }
+
+/* a page turned on its side: same sheet, content rotated a quarter turn */
+.turn { position: absolute; top: 0; left: 0; width: 112mm; height: 76.5mm;
+        transform: translateY(112mm) rotate(-90deg); transform-origin: top left; }
+
+h1 { font-family: Georgia, "Times New Roman", serif; font-size: 11pt; line-height: 1.04;
+     margin: 0 0 1.5mm; font-weight: 700; letter-spacing: -0.01em; }
+h2 { font-family: Georgia, "Times New Roman", serif; font-size: 8pt; line-height: 1.08;
+     margin: 0 0 1.2mm; font-weight: 700; }
+h3 { font-size: 6.2pt; margin: 0 0 1mm; font-weight: 700;
+     text-transform: uppercase; letter-spacing: .07em; }
+p { margin: 0 0 1.6mm; line-height: 1.35; }
+.sub { font-size: 4.4pt; color: #666; line-height: 1.32; font-weight: 400;
+       text-transform: none; letter-spacing: 0; }
+.rule { border-top: 0.6pt solid #2b2b2b; margin: 1.8mm 0; }
+.hair { border-top: 0.4pt solid #b4b4b4; margin: 1.4mm 0; }
+.foot { position: absolute; left: 0; right: 0; bottom: 0;
+        font-size: 4.4pt; color: #909090; }
+.foot .pg { float: right; }
+
+table.g { border-collapse: collapse; table-layout: fixed; }
+table.g td { padding: 0; font-weight: 400; }
+td.cell { border: 0.4pt solid #b4b4b4; }
+td.dead { border: 0.4pt solid #b4b4b4; background: #d9d9d9; }
+td.leap { border: 0.4pt dotted #9a9a9a; }
+td.mlab { font-size: 4.4pt; text-align: left; padding-right: 1.2mm;
+          border-right: 0.6pt solid #2b2b2b; white-space: nowrap; }
+td.dnum { font-size: 3.4pt; color: #808080; text-align: center;
+          vertical-align: bottom; }
+td.q { border-left: 0.5pt solid #8e8e8e; }
+
+table.t { border-collapse: collapse; width: 100%; table-layout: fixed; }
+table.t td, table.t th { border: 0.4pt solid #b4b4b4; padding: .8mm .9mm;
+                         font-size: 4.4pt; text-align: left; line-height: 1.25; }
+table.t th { border-bottom: 0.7pt solid #2b2b2b; font-weight: 700;
+             font-size: 3.8pt; text-transform: uppercase; letter-spacing: .05em; }
+
+.legend { font-size: 4.4pt; line-height: 1.5; }
+.key { display: inline-block; width: 2.6mm; height: 2.6mm; border: 0.4pt solid #b4b4b4;
+       vertical-align: -0.3mm; margin-right: .8mm; }
+.key.f { background: #2b2b2b; }
+.key.d { background: #d9d9d9; }
+.key.l { border-style: dotted; border-color: #9a9a9a; }
+.nameline { display: inline-block; border-bottom: 0.6pt solid #2b2b2b; }
+.cover { display: flex; flex-direction: column; height: 100%; }
+.mid { flex: 1 1 auto; }
+.wbox { border: 0.6pt solid #2b2b2b; width: 100%; }
+
+body { background: #d9d6cf; margin: 0; padding: 8mm; }
+.sheet { box-shadow: 0 1.2mm 4mm rgba(0,0,0,.22); background: #fffdf8; }
+.sheet::after { content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(105deg, rgba(0,0,0,.030), rgba(0,0,0,0) 32%,
+              rgba(0,0,0,0) 72%, rgba(0,0,0,.045)); }
+</style></head><body data-kind='timezone'><div class='sheet L'><div class='pad'><h2>World time chart</h2><p class='sub' style='margin-bottom:2mm'>Hours from UTC, read across. The ring marks the prime meridian.</p><table class='g' style='width:76.500mm'><tr><td style='width:4.1667%;text-align:center;font-size:5.00pt;color:#777;padding-bottom:.4mm'></td><td style='width:4.1667%;text-align:center;font-size:5.00pt;color:#777;padding-bottom:.4mm'>−10</td><td style='width:4.1667%;text-align:center;font-size:5.00pt;color:#777;padding-bottom:.4mm'></td><td style='width:4.1667%;text-align:center;font-size:5.00pt;color:#777;padding-bottom:.4mm'>−8</td><td style='width:4.1667%;text-align:center;font-size:5.00pt;color:#777;padding-bottom:.4mm'></td><td style='width:4.1667%;text-align:center;font-size:5.00pt;color:#777;padding-bottom:.4mm'>−6</td><td style='width:4.1667%;text-align:center;font-size:5.00pt;color:#777;padding-bottom:.4mm'></td><td style='width:4.1667%;text-align:center;font-size:5.00pt;color:#777;padding-bottom:.4mm'>−4</td><td style='width:4.1667%;text-align:center;font-size:5.00pt;color:#777;padding-bottom:.4mm'></td><td style='width:4.1667%;text-align:center;font-size:5.00pt;color:#777;padding-bottom:.4mm'>−2</td><td style='width:4.1667%;text-align:center;font-size:5.00pt;color:#777;padding-bottom:.4mm'></td><td style='width:4.1667%;text-align:center;font-size:5.00pt;color:#333;padding-bottom:.4mm'>0</td><td style='width:4.1667%;text-align:center;font-size:5.00pt;color:#777;padding-bottom:.4mm'></td><td style='width:4.1667%;text-align:center;font-size:5.00pt;color:#777;padding-bottom:.4mm'>+2</td><td style='width:4.1667%;text-align:center;font-size:5.00pt;color:#777;padding-bottom:.4mm'></td><td style='width:4.1667%;text-align:center;font-size:5.00pt;color:#777;padding-bottom:.4mm'>+4</td><td style='width:4.1667%;text-align:center;font-size:5.00pt;color:#777;padding-bottom:.4mm'></td><td style='width:4.1667%;text-align:center;font-size:5.00pt;color:#777;padding-bottom:.4mm'>+6</td><td style='width:4.1667%;text-align:center;font-size:5.00pt;color:#777;padding-bottom:.4mm'></td><td style='width:4.1667%;text-align:center;font-size:5.00pt;color:#777;padding-bottom:.4mm'>+8</td><td style='width:4.1667%;text-align:center;font-size:5.00pt;color:#777;padding-bottom:.4mm'></td><td style='width:4.1667%;text-align:center;font-size:5.00pt;color:#777;padding-bottom:.4mm'>+10</td><td style='width:4.1667%;text-align:center;font-size:5.00pt;color:#777;padding-bottom:.4mm'></td><td style='width:4.1667%;text-align:center;font-size:5.00pt;color:#777;padding-bottom:.4mm'>+12</td></tr></table><svg viewBox='0 0 76.500 38.250' width='76.500mm' height='38.250mm' xmlns='http://www.w3.org/2000/svg' style='display:block'><rect x='0' y='0' width='76.500' height='38.250' fill='#fafafa'/><rect x='0.000' y='0' width='3.188' height='38.250' fill='#eeeeee'/><rect x='6.375' y='0' width='3.188' height='38.250' fill='#eeeeee'/><rect x='12.750' y='0' width='3.188' height='38.250' fill='#eeeeee'/><rect x='19.125' y='0' width='3.188' height='38.250' fill='#eeeeee'/><rect x='25.500' y='0' width='3.188' height='38.250' fill='#eeeeee'/><rect x='31.875' y='0' width='3.188' height='38.250' fill='#eeeeee'/><rect x='38.250' y='0' width='3.188' height='38.250' fill='#eeeeee'/><rect x='44.625' y='0' width='3.188' height='38.250' fill='#eeeeee'/><rect x='51.000' y='0' width='3.188' height='38.250' fill='#eeeeee'/><rect x='57.375' y='0' width='3.188' height='38.250' fill='#eeeeee'/><rect x='63.750' y='0' width='3.188' height='38.250' fill='#eeeeee'/><rect x='70.125' y='0' width='3.188' height='38.250' fill='#eeeeee'/><line x1='0.000' y1='0' x2='0.000' y2='38.250' stroke='#c6c6c6' stroke-width='0.12'/><line x1='3.188' y1='0' x2='3.188' y2='38.250' stroke='#c6c6c6' stroke-width='0.12'/><line x1='6.375' y1='0' x2='6.375' y2='38.250' stroke='#c6c6c6' stroke-width='0.12'/><line x1='9.562' y1='0' x2='9.562' y2='38.250' stroke='#c6c6c6' stroke-width='0.12'/><line x1='12.750' y1='0' x2='12.750' y2='38.250' stroke='#c6c6c6' stroke-width='0.12'/><line x1='15.938' y1='0' x2='15.938' y2='38.250' stroke='#c6c6c6' stroke-width='0.12'/><line x1='19.125' y1='0' x2='19.125' y2='38.250' stroke='#c6c6c6' stroke-width='0.12'/><line x1='22.312' y1='0' x2='22.312' y2='38.250' stroke='#c6c6c6' stroke-width='0.12'/><line x1='25.500' y1='0' x2='25.500' y2='38.250' stroke='#c6c6c6' stroke-width='0.12'/><line x1='28.688' y1='0' x2='28.688' y2='38.250' stroke='#c6c6c6' stroke-width='0.12'/><line x1='31.875' y1='0' x2='31.875' y2='38.250' stroke='#c6c6c6' stroke-width='0.12'/><line x1='35.062' y1='0' x2='35.062' y2='38.250' stroke='#c6c6c6' stroke-width='0.12'/><line x1='38.250' y1='0' x2='38.250' y2='38.250' stroke='#2b2b2b' stroke-width='0.25'/><line x1='41.438' y1='0' x2='41.438' y2='38.250' stroke='#c6c6c6' stroke-width='0.12'/><line x1='44.625' y1='0' x2='44.625' y2='38.250' stroke='#c6c6c6' stroke-width='0.12'/><line x1='47.812' y1='0' x2='47.812' y2='38.250' stroke='#c6c6c6' stroke-width='0.12'/><line x1='51.000' y1='0' x2='51.000' y2='38.250' stroke='#c6c6c6' stroke-width='0.12'/><line x1='54.188' y1='0' x2='54.188' y2='38.250' stroke='#c6c6c6' stroke-width='0.12'/><line x1='57.375' y1='0' x2='57.375' y2='38.250' stroke='#c6c6c6' stroke-width='0.12'/><line x1='60.562' y1='0' x2='60.562' y2='38.250' stroke='#c6c6c6' stroke-width='0.12'/><line x1='63.750' y1='0' x2='63.750' y2='38.250' stroke='#c6c6c6' stroke-width='0.12'/><line x1='66.938' y1='0' x2='66.938' y2='38.250' stroke='#c6c6c6' stroke-width='0.12'/><line x1='70.125' y1='0' x2='70.125' y2='38.250' stroke='#c6c6c6' stroke-width='0.12'/><line x1='73.312' y1='0' x2='73.312' y2='38.250' stroke='#c6c6c6' stroke-width='0.12'/><line x1='76.500' y1='0' x2='76.500' y2='38.250' stroke='#c6c6c6' stroke-width='0.12'/><path d='M60.98 2.77L62.50 3.01L61.50 3.36L62.27 3.40L62.38 3.54L62.81 3.45L64.43 3.62L64.44 3.46L65.23 3.49L65.58 3.60L65.67 3.74L65.55 3.83L66.15 4.08L66.35 3.86L67.97 3.93L67.82 3.74L68.10 3.64L70.02 3.78L70.76 4.07L72.04 4.07L72.21 4.15L72.19 4.31L72.45 4.37L73.92 4.34L74.29 4.53L74.55 4.46L74.38 4.32L74.47 4.23L75.59 4.28L76.50 4.47L76.50 5.32L75.95 5.40L76.37 5.74L76.34 5.89L75.16 6.02L74.45 6.40L74.14 6.25L73.00 6.40L72.68 6.75L72.93 6.88L72.90 7.19L72.70 7.20L72.61 7.38L72.70 7.47L72.33 7.58L72.25 7.82L71.94 7.87L71.87 8.09L71.57 8.29L71.28 7.36L71.38 7.06L71.57 6.84L71.90 6.79L73.03 6.13L73.20 5.83L72.28 6.26L72.10 6.00L71.55 6.07L71.02 6.43L71.20 6.56L70.39 6.63L70.41 6.48L70.08 6.45L68.47 6.58L66.97 7.49L67.61 7.70L67.98 7.61L68.29 7.84L68.29 8.02L68.01 8.83L67.62 9.28L66.91 9.90L66.63 10.03L66.36 9.93L65.35 10.68L65.76 11.31L65.68 11.67L65.13 11.82L65.05 11.32L65.21 11.29L64.75 11.03L64.88 10.72L64.66 10.64L63.97 10.86L64.21 10.54L64.10 10.42L63.33 10.79L63.23 10.89L63.52 11.17L64.25 11.17L64.29 11.28L63.98 11.34L63.57 11.71L63.80 11.82L64.16 12.39L64.02 12.61L64.19 12.79L64.11 13.13L63.47 13.91L62.88 14.28L61.79 14.58L61.72 14.80L61.60 14.82L61.60 14.58L61.31 14.51L60.75 14.93L60.70 15.07L61.39 15.88L61.48 16.27L61.45 16.65L60.60 17.30L60.58 17.02L60.24 16.87L60.05 16.53L59.68 16.44L59.71 16.28L59.52 16.28L59.33 17.16L60.13 17.95L60.40 18.85L59.80 18.54L59.52 17.75L59.18 17.34L59.15 17.47L59.24 16.69L58.90 15.53L58.52 15.79L58.27 15.72L58.29 15.26L57.68 14.29L57.48 14.28L57.43 14.48L56.73 14.56L56.63 14.84L55.72 15.61L55.32 15.75L55.22 16.92L54.73 17.43L53.88 15.73L53.68 14.59L53.22 14.69L52.95 14.43L52.99 14.27L52.35 13.72L51.32 13.80L50.45 13.66L50.25 13.36L49.88 13.50L49.20 13.20L48.90 12.72L48.44 12.75L49.05 13.87L49.09 13.60L49.21 13.64L49.26 14.02L49.73 14.00L50.23 13.52L50.33 13.97L50.73 14.12L50.96 14.38L50.54 14.82L50.51 15.10L49.99 15.46L49.38 15.64L49.34 15.81L48.59 16.15L47.49 16.44L47.31 15.56L46.57 14.60L46.43 14.09L45.61 13.16L45.67 12.86L45.46 13.25L45.14 12.78L45.83 14.04L45.80 14.22L46.08 14.45L46.21 15.17L46.59 15.74L47.46 16.49L47.33 16.63L47.73 16.91L49.11 16.57L49.10 16.86L48.39 18.23L46.81 19.67L46.58 20.12L46.50 20.50L46.63 20.58L46.58 20.93L46.85 21.41L46.92 22.25L46.63 22.68L45.64 23.33L45.82 24.16L45.17 24.59L45.09 25.23L44.25 26.09L43.73 26.34L43.05 26.32L42.42 26.52L42.16 26.38L42.12 25.85L41.48 24.88L41.28 23.82L40.76 22.96L40.75 22.48L41.16 21.41L40.78 20.20L40.12 19.36L40.33 18.47L40.25 18.33L40.06 18.11L39.50 18.22L39.17 17.79L38.65 17.82L37.83 18.12L37.26 18.03L36.65 18.20L36.34 18.10L35.61 17.58L35.10 16.81L34.72 16.54L34.51 15.99L34.75 15.70L34.82 15.28L34.64 14.47L35.18 13.55L36.22 12.76L36.27 12.21L36.78 11.88L36.99 11.53L37.79 11.65L38.56 11.35L40.27 11.19L40.61 11.28L40.45 11.94L42.31 12.69L42.51 12.54L42.53 12.27L42.83 12.15L44.39 12.57L44.83 12.42L45.43 12.54L45.90 11.76L45.93 11.34L45.16 11.45L44.12 11.33L43.84 11.01L43.95 10.84L43.81 10.74L44.05 10.54L44.37 10.53L44.46 10.37L44.87 10.39L45.37 10.20L46.40 10.42L46.83 10.41L47.11 10.21L46.04 9.51L46.56 9.08L45.68 9.29L45.97 9.54L45.45 9.70L45.15 9.49L45.33 9.33L44.78 9.23L44.38 9.58L44.13 10.08L44.37 10.40L43.85 10.59L43.55 10.42L43.29 10.48L43.44 10.60L43.33 10.63L43.06 10.57L43.36 11.12L43.16 11.07L43.17 11.39L43.03 11.39L42.37 10.57L42.40 10.26L41.04 9.41L40.87 9.48L40.93 9.76L42.18 10.59L41.83 10.53L41.75 10.67L41.87 10.86L41.67 11.05L41.52 10.61L40.14 9.70L39.64 9.96L38.91 9.97L38.90 10.22L38.42 10.41L38.19 10.77L38.27 10.89L37.79 11.33L37.32 11.33L37.11 11.49L36.86 11.28L36.36 11.29L36.37 10.99L36.22 10.89L36.39 10.46L36.25 9.98L36.55 9.83L37.85 9.90L37.96 9.77L38.00 9.35L37.30 8.93L37.27 8.78L37.91 8.79L37.84 8.55L38.04 8.64L38.53 8.47L38.60 8.30L39.06 8.16L39.25 7.84L39.98 7.75L40.12 7.65L39.98 7.33L40.06 6.99L40.50 6.86L40.43 7.04L40.57 7.13L40.30 7.34L40.57 7.65L40.91 7.55L41.25 7.70L41.99 7.47L42.43 7.56L42.77 7.40L42.84 6.93L43.04 6.85L43.38 7.01L43.44 6.72L43.21 6.55L44.44 6.37L44.21 6.27L43.11 6.41L42.78 6.22L42.83 5.70L43.65 5.29L43.33 5.10L42.96 5.16L42.76 5.31L42.79 5.44L42.04 5.79L41.89 6.09L42.24 6.36L41.83 6.65L41.62 7.20L41.00 7.36L40.45 6.49L40.03 6.73L39.45 6.67L39.31 5.96L40.49 5.42L41.39 4.72L42.33 4.29L43.14 4.21L43.47 4.03L44.24 4.00L44.90 4.15L44.63 4.21L44.86 4.34L46.01 4.45L46.98 4.79L46.99 4.93L46.41 5.10L45.30 4.97L45.65 5.12L45.67 5.44L46.11 5.56L46.01 5.36L46.15 5.28L46.66 5.41L46.84 5.36L46.70 5.21L47.19 5.00L47.59 5.09L47.71 4.94L47.48 4.55L48.08 4.62L48.20 4.74L47.93 4.77L47.93 4.89L48.10 4.96L49.67 4.49L49.82 4.50L49.62 4.63L50.75 4.49L50.99 4.62L51.23 4.48L51.01 4.35L51.12 4.28L52.81 4.66L52.95 4.54L52.47 4.37L52.42 4.03L52.95 3.65L53.68 3.66L53.52 3.95L53.72 4.17L53.67 4.46L53.90 4.59L53.40 5.03L53.64 5.06L54.20 4.73L54.07 4.60L54.17 4.46L53.89 4.33L54.06 4.12L53.78 3.94L54.16 3.80L54.12 3.65L54.33 3.76L54.25 3.97L54.48 4.01L54.38 3.85L54.74 3.77L55.57 3.88L55.36 3.47L56.70 3.41L56.53 3.30L56.77 3.16L59.66 2.88L60.42 2.61L60.79 2.68L60.50 2.73L60.98 2.77Z M19.01 4.36L19.01 4.57L19.29 4.41L19.55 4.54L19.48 4.70L19.69 4.84L20.06 4.51L20.08 4.28L20.69 4.32L20.98 4.43L20.83 4.65L20.98 4.76L20.54 5.01L20.02 4.98L19.69 5.36L18.45 5.95L18.22 6.18L18.13 6.60L18.44 6.63L18.64 6.99L18.93 6.95L20.19 7.37L20.77 7.41L20.80 7.80L21.27 8.24L21.55 7.96L21.29 7.51L21.99 7.11L21.56 6.63L21.82 6.41L21.65 5.88L22.56 5.86L23.08 6.13L23.46 6.15L23.53 6.60L23.87 6.76L24.53 6.30L25.20 7.02L25.12 7.15L26.07 7.52L26.40 7.81L26.42 8.04L25.49 8.45L24.14 8.45L23.14 9.18L23.66 8.86L24.42 8.66L24.61 8.77L24.41 8.91L24.55 9.30L25.18 9.38L25.39 9.14L25.54 9.37L24.36 9.87L24.20 9.86L24.19 9.68L24.56 9.50L23.98 9.53L23.23 9.98L23.38 10.28L22.59 10.43L22.96 10.43L22.54 10.47L22.33 10.85L22.20 10.73L22.30 10.96L22.11 11.22L22.03 10.81L22.03 11.03L21.90 11.00L22.04 11.07L22.16 11.57L20.97 12.44L21.24 13.41L21.17 13.77L20.89 13.63L20.63 12.94L20.38 12.73L20.16 12.83L19.89 12.66L19.30 12.68L19.29 12.90L19.09 12.94L18.31 12.81L17.72 13.11L17.56 13.31L17.45 14.36L17.79 15.02L18.18 15.27L18.69 15.15L18.96 15.03L19.07 14.66L19.75 14.55L19.35 15.75L20.19 15.72L20.53 15.88L20.44 16.77L20.94 17.26L21.34 17.08L21.92 17.29L22.33 16.77L22.65 16.74L23.00 16.48L23.13 16.55L22.96 16.70L23.01 17.20L23.15 17.03L23.08 16.79L23.34 16.71L23.39 16.54L23.76 16.88L24.46 16.98L25.10 16.85L24.92 16.91L24.99 17.01L25.32 17.13L25.36 17.30L25.69 17.43L26.11 17.86L26.78 17.90L27.34 18.23L27.63 18.76L27.54 19.14L27.92 19.18L27.93 19.39L28.09 19.25L28.71 19.45L28.78 19.70L29.75 19.73L30.34 20.15L30.68 20.22L30.87 20.68L30.78 21.04L30.03 21.90L29.91 22.92L29.55 23.79L29.33 24.01L28.76 24.09L28.12 24.41L27.94 24.62L27.86 25.22L26.82 26.44L26.30 26.53L25.83 26.33L26.18 26.97L25.98 27.24L25.66 27.35L25.00 27.38L25.04 27.77L24.92 27.84L24.41 27.85L24.44 28.06L24.76 28.17L24.40 28.37L24.32 28.70L23.95 28.80L23.89 28.96L24.30 29.16L24.23 29.35L23.56 29.91L23.77 30.25L23.19 30.37L23.16 30.56L22.32 30.23L22.18 29.47L22.50 29.10L22.18 29.04L22.45 28.50L22.69 28.57L22.80 28.13L22.65 28.08L22.59 28.34L22.45 28.31L22.69 27.47L22.61 27.02L23.07 26.01L23.34 23.32L23.30 23.02L23.06 22.81L22.10 22.24L21.30 20.65L20.98 20.43L20.95 20.13L21.30 19.69L21.04 19.60L21.05 19.35L21.23 18.96L21.49 18.83L21.86 18.31L21.64 17.36L21.34 17.23L21.15 17.41L21.25 17.52L21.06 17.59L21.02 17.46L20.50 17.33L20.19 16.98L20.16 17.09L20.05 17.01L20.04 16.77L19.66 16.30L18.86 16.16L18.13 15.68L17.73 15.80L16.26 15.24L15.83 14.89L15.88 14.57L15.72 14.29L14.40 12.97L14.21 12.50L13.86 12.37L13.88 12.72L15.00 14.20L14.87 14.28L14.41 13.87L14.39 13.60L13.80 13.23L13.99 13.05L13.70 12.84L13.32 12.10L12.62 11.77L11.81 10.56L11.92 9.45L11.75 8.89L12.09 8.92L12.20 9.12L12.15 8.71L11.17 8.32L11.08 8.00L10.81 7.91L9.76 6.77L6.99 6.19L6.75 6.23L6.80 6.38L6.01 6.55L6.24 6.10L5.52 6.51L5.68 6.62L5.48 6.77L4.58 7.23L3.23 7.57L4.73 6.89L4.88 6.60L3.83 6.66L3.85 6.45L3.44 6.42L2.95 6.06L3.28 5.71L4.09 5.57L3.93 5.44L4.08 5.36L3.20 5.43L2.53 5.17L3.30 4.98L3.89 5.07L2.81 4.60L3.84 4.18L4.98 3.96L9.24 4.48L10.67 4.21L10.81 4.30L11.02 4.15L11.53 4.36L11.81 4.22L11.84 4.38L12.44 4.29L14.05 4.59L13.75 4.70L14.89 4.68L15.11 4.81L15.34 4.70L15.13 4.61L15.26 4.54L15.69 4.51L16.69 4.75L17.33 4.72L17.31 4.59L17.50 4.55L17.82 4.62L17.82 4.83L18.23 4.45L17.75 4.23L17.77 4.00L18.02 3.84L18.80 4.21L18.61 4.31L19.01 4.36Z M68.76 22.05L69.14 22.31L69.36 23.15L69.88 23.46L70.06 23.87L70.28 23.89L70.79 24.66L70.88 25.10L70.74 25.85L70.20 26.70L70.12 27.08L69.34 27.42L69.04 27.29L69.07 27.18L68.77 27.37L68.14 27.20L67.91 26.80L67.60 26.69L67.62 26.43L67.33 26.62L67.53 26.12L67.15 26.54L66.78 26.06L66.16 25.82L65.06 25.97L64.65 26.13L64.53 26.33L63.73 26.35L63.33 26.58L62.69 26.39L62.83 25.84L62.33 24.68L62.43 24.77L62.36 24.57L62.52 24.71L62.35 24.31L62.51 23.75L62.52 23.91L63.05 23.52L63.93 23.31L64.39 22.61L64.57 22.75L64.49 22.65L64.96 22.15L65.25 22.06L65.79 22.31L66.01 21.79L66.42 21.70L66.26 21.52L66.38 21.49L67.00 21.73L67.25 21.65L67.35 21.75L67.04 22.31L68.05 22.89L68.27 22.61L68.54 21.39L68.76 22.05Z M32.49 1.38L33.82 1.54L31.47 1.66L33.56 1.76L33.33 1.88L34.90 1.72L35.66 1.85L33.99 2.09L34.48 2.10L34.06 2.39L34.07 2.63L34.33 2.76L33.64 2.84L34.04 2.95L34.09 3.13L33.86 3.15L34.13 3.34L33.66 3.35L33.91 3.44L33.84 3.51L33.24 3.55L33.51 3.79L32.98 3.75L33.55 3.94L33.63 4.11L33.25 4.15L32.82 3.95L32.90 4.09L32.65 4.20L33.50 4.22L32.35 4.58L31.50 4.65L30.98 4.96L29.79 5.21L29.50 5.64L29.15 5.81L29.24 5.97L29.03 6.35L27.99 6.19L27.28 5.60L26.78 4.85L26.99 4.60L27.31 4.52L27.44 4.26L26.63 4.33L26.70 4.08L27.33 4.13L26.39 3.90L26.62 3.70L25.80 3.08L23.69 2.96L23.08 2.76L24.06 2.68L22.67 2.54L24.29 2.25L24.37 2.18L23.80 2.10L25.03 1.84L24.94 1.75L27.54 1.61L28.79 1.77L28.31 1.57L30.04 1.37L32.49 1.38Z M19.86 3.58L20.02 3.71L20.22 3.54L20.76 3.45L21.12 3.67L21.09 3.81L21.71 3.67L22.50 3.97L22.90 3.92L23.63 4.14L24.02 4.42L23.63 4.52L25.11 4.92L24.67 5.31L24.07 5.02L23.80 5.04L23.77 5.17L24.37 5.44L24.51 5.65L24.44 5.81L23.63 5.58L24.19 5.96L23.16 5.76L22.35 5.38L21.74 5.48L21.56 5.40L21.70 5.25L22.53 5.22L22.46 5.14L22.81 4.83L22.75 4.73L21.47 4.21L20.20 4.26L19.41 4.16L19.23 4.09L19.45 3.99L19.15 3.99L19.08 3.77L19.24 3.58L20.01 3.44L19.86 3.58Z M23.69 1.46L25.11 1.57L23.87 1.81L24.34 1.80L23.12 2.17L21.91 2.27L22.20 2.29L22.05 2.33L22.23 2.44L21.30 2.72L21.70 2.81L21.13 2.94L19.23 2.88L19.21 2.77L19.60 2.72L19.49 2.57L20.19 2.65L19.56 2.47L20.17 2.26L19.78 2.07L20.86 2.03L19.64 2.01L18.79 1.72L21.40 1.46L23.69 1.46Z M66.75 19.37L66.81 19.71L67.04 19.84L67.21 19.62L67.65 19.49L68.97 19.95L69.27 20.29L69.63 20.42L69.53 20.70L70.27 21.37L69.68 21.28L69.29 20.84L69.01 20.75L68.56 21.11L67.82 20.85L67.49 20.91L67.72 20.68L67.56 20.27L66.65 19.88L66.51 20.00L66.30 19.72L66.66 19.59L66.35 19.59L65.99 19.32L66.38 19.20L66.75 19.37Z M63.30 18.74L63.54 18.93L63.28 18.96L62.93 19.98L61.67 19.75L61.43 19.22L61.55 18.70L61.87 18.73L61.92 18.55L62.26 18.47L63.06 17.65L63.58 17.98L63.18 18.44L63.30 18.74Z M13.99 3.59L13.88 3.69L14.89 3.62L15.26 3.90L15.37 3.81L15.21 3.59L15.61 3.60L15.85 3.68L16.05 4.04L16.77 4.34L16.42 4.36L16.48 4.52L15.73 4.42L14.17 4.56L13.32 4.26L14.36 4.17L13.20 4.14L13.08 4.06L13.58 3.97L12.88 3.92L13.20 3.67L13.99 3.59Z M48.89 22.01L48.96 22.46L48.80 22.46L48.26 24.42L47.90 24.56L47.61 24.44L47.44 23.81L47.68 23.39L47.59 22.82L47.70 22.57L48.39 22.23L48.70 21.68L48.89 22.01Z M60.74 20.37L60.50 20.37L60.05 20.02L58.50 17.96L58.96 18.01L59.64 18.68L59.85 18.68L60.32 19.10L60.23 19.28L60.80 19.78L60.74 20.37Z M37.61 6.67L37.39 6.90L37.83 6.87L37.59 7.23L37.81 7.24L38.35 7.88L38.61 7.92L38.47 8.12L38.56 8.23L37.13 8.51L37.02 8.47L37.53 8.20L37.13 8.08L37.35 8.01L37.28 7.76L37.59 7.78L37.63 7.65L37.22 7.48L37.18 7.27L37.06 7.37L36.94 7.06L37.19 6.67L37.61 6.67Z M68.21 11.23L68.05 11.66L67.41 11.77L67.11 12.01L66.95 11.77L66.09 11.92L66.30 12.08L66.16 12.44L65.92 12.45L65.97 12.26L65.75 12.05L66.43 11.60L67.08 11.57L67.30 11.20L67.45 11.30L67.88 11.00L67.97 10.51L68.29 10.33L68.40 10.80L68.21 11.23Z M50.48 4.10L49.66 4.09L49.19 3.82L49.82 3.48L49.62 3.45L50.13 3.27L50.07 3.17L51.25 2.92L52.88 2.86L50.68 3.33L50.03 3.75L50.07 3.92L50.48 4.10Z M1.06 4.98L1.73 4.91L2.15 5.10L1.59 5.22L1.50 5.47L0.35 5.23L0.28 5.08L0.03 5.13L0.12 5.23L0.00 5.32L0.00 4.47L1.08 4.84L1.06 4.98Z M12.65 3.95L12.09 4.06L11.49 3.85L11.91 3.47L11.70 3.34L13.27 3.36L13.70 3.51L12.92 3.71L12.65 3.95Z M35.17 5.00L35.12 5.14L35.36 5.28L34.28 5.63L33.41 5.53L33.62 5.44L33.16 5.34L33.53 5.23L33.08 5.18L33.55 5.01L33.88 5.16L35.17 5.00Z M18.13 2.74L18.78 2.81L19.30 3.06L21.01 3.04L21.29 3.20L19.18 3.29L18.61 3.22L18.30 2.91L17.61 2.82L18.13 2.74Z M19.76 2.20L20.02 2.27L18.96 2.50L18.51 2.48L18.29 2.39L18.46 2.26L17.70 2.09L18.21 1.92L18.12 1.87L18.61 1.86L19.76 2.20Z M75.02 27.82L75.28 27.91L74.95 28.34L75.03 28.44L74.68 28.53L74.51 28.88L74.23 29.04L73.67 28.95L73.75 28.71L74.49 28.27L74.82 27.83L75.02 27.82Z M42.13 2.19L42.83 2.35L42.29 2.43L41.89 2.80L41.63 2.81L41.17 2.68L41.37 2.61L40.47 2.20L42.13 2.19Z M26.32 8.35L26.18 8.54L26.89 8.66L26.82 8.81L26.97 8.78L27.06 9.02L26.97 9.21L26.74 9.18L26.72 8.98L26.48 9.16L26.35 9.15L26.50 9.05L26.30 9.00L25.66 9.01L25.66 8.81L26.06 8.35L26.48 8.16L26.32 8.35Z M64.86 18.82L64.53 19.07L63.79 19.07L63.95 19.42L64.46 19.26L64.07 19.53L64.42 20.26L64.23 20.25L64.33 20.07L64.07 20.10L63.96 19.68L63.82 19.75L63.84 20.30L63.62 20.27L63.64 19.87L63.49 19.72L63.76 19.00L63.94 18.85L64.37 18.94L64.86 18.82Z M75.35 26.81L75.81 27.17L76.19 27.14L76.07 27.45L75.91 27.44L75.49 27.98L75.36 27.90L75.42 27.61L75.19 27.52L75.37 27.07L74.94 26.46L75.30 26.62L75.35 26.81Z M59.49 2.36L58.43 2.33L57.63 2.05L58.64 1.86L59.54 2.17L59.49 2.36Z M15.26 2.93L15.79 3.09L14.40 3.31L14.05 3.25L14.49 3.15L13.24 3.14L13.73 2.87L15.07 3.09L14.77 2.88L14.96 2.81L15.26 2.93Z M61.33 20.57L61.79 20.50L62.84 20.90L62.59 20.98L60.64 20.58L60.79 20.38L61.33 20.57Z M68.83 9.74L69.13 9.69L69.18 9.93L68.86 9.99L68.68 10.20L68.34 10.06L68.23 10.29L67.99 10.29L67.96 10.08L68.29 9.90L68.42 9.45L68.83 9.74Z M68.78 8.34L68.99 8.72L68.67 8.65L68.54 8.95L68.75 9.32L68.58 9.19L68.44 9.36L68.46 8.30L68.34 8.09L68.36 7.80L68.55 7.70L68.47 7.60L68.56 7.57L68.78 8.34Z M23.85 30.57L24.43 30.75L23.54 30.92L22.38 30.35L23.14 30.61L23.51 30.29L23.85 30.57Z M16.92 3.43L17.56 3.45L17.41 3.61L17.74 3.71L17.70 3.90L17.14 3.96L16.47 3.72L16.91 3.67L16.67 3.54L16.92 3.43Z M64.03 15.19L64.23 15.20L64.29 15.49L64.10 15.74L64.12 16.08L64.59 16.20L64.62 16.46L64.37 16.25L63.88 16.18L63.96 16.04L63.76 15.94L63.72 15.65L63.81 15.72L63.90 15.19L64.03 15.19Z M36.81 8.02L36.13 8.11L36.30 7.89L36.19 7.68L36.82 7.40L37.05 7.53L36.81 8.02Z M69.08 3.07L68.91 3.23L67.78 3.27L67.36 3.13L67.75 2.95L69.08 3.07Z M21.32 14.29L22.49 14.82L21.73 14.90L21.87 14.79L21.52 14.54L20.79 14.37L20.87 14.31L20.19 14.47L20.77 14.20L21.32 14.29Z M65.11 17.34L65.14 17.60L65.07 17.79L64.99 17.58L64.89 17.68L64.90 17.94L64.65 17.82L64.52 17.46L64.16 17.60L64.49 17.28L64.57 17.37L64.91 17.21L64.90 17.05L65.11 17.34Z M69.15 27.79L69.76 27.81L69.68 28.31L69.29 28.38L69.00 27.87L69.15 27.79Z M20.15 5.17L21.23 5.58L20.59 5.50L20.08 5.73L20.00 5.60L19.72 5.62L19.90 5.52L20.00 5.16L20.15 5.17Z M22.83 14.90L23.39 14.95L23.73 15.17L23.23 15.21L23.08 15.39L22.43 15.23L22.88 15.16L22.65 14.95L22.83 14.90Z M17.32 2.82L17.48 2.92L17.39 3.19L16.47 3.07L16.45 2.90L17.32 2.82Z M18.45 3.66L17.98 3.81L17.85 3.52L18.17 3.37L19.02 3.43L18.45 3.66Z M43.66 2.04L44.07 2.11L43.14 2.25L41.94 2.06L43.66 2.04Z M13.56 2.62L13.36 2.86L12.14 2.95L12.94 2.65L13.56 2.62Z M55.51 17.81L55.32 17.86L55.22 17.69L55.28 17.04L55.63 17.53L55.51 17.81Z M60.58 2.48L59.38 2.57L59.94 2.26L60.64 2.40L60.58 2.48Z M12.00 8.82L11.55 8.75L11.04 8.50L10.97 8.34L11.53 8.44L12.00 8.82Z M23.70 31.45L23.63 31.45L23.15 31.45L22.48 31.45L22.31 31.45L22.94 31.45L23.01 31.45L23.32 31.45L23.70 31.45Z' fill='#ffffff' fill-opacity='0.55' stroke='#2b2b2b' stroke-width='0.22' stroke-linejoin='round'/><circle cx='13.12' cy='11.89' r='0.45' fill='#2b2b2b' stroke='#2b2b2b' stroke-width='0.2'/><text x='11.72' y='11.09' font-size='1.90' fill='#2b2b2b' text-anchor='end' font-family="Helvetica Neue, Arial, sans-serif">Los Angeles</text><circle cx='22.52' cy='10.47' r='0.45' fill='#2b2b2b' stroke='#2b2b2b' stroke-width='0.2'/><text x='21.12' y='13.07' font-size='1.90' fill='#2b2b2b' text-anchor='end' font-family="Helvetica Neue, Arial, sans-serif">New York</text><circle cx='38.22' cy='8.18' r='0.45' fill='#ffffff' stroke='#2b2b2b' stroke-width='0.2'/><text x='36.62' y='6.98' font-size='1.90' fill='#2b2b2b' text-anchor='end' font-family="Helvetica Neue, Arial, sans-serif">London</text><circle cx='49.99' cy='13.77' r='0.45' fill='#2b2b2b' stroke='#2b2b2b' stroke-width='0.2'/><text x='51.59' y='16.77' font-size='1.90' fill='#2b2b2b' text-anchor='start' font-family="Helvetica Neue, Arial, sans-serif">Dubai</text><circle cx='54.66' cy='13.05' r='0.45' fill='#2b2b2b' stroke='#2b2b2b' stroke-width='0.2'/><text x='56.26' y='11.65' font-size='1.90' fill='#2b2b2b' text-anchor='start' font-family="Helvetica Neue, Arial, sans-serif">Delhi</text><circle cx='60.31' cy='18.84' r='0.45' fill='#2b2b2b' stroke='#2b2b2b' stroke-width='0.2'/><text x='58.71' y='21.64' font-size='1.90' fill='#2b2b2b' text-anchor='end' font-family="Helvetica Neue, Arial, sans-serif">Singapore</text><circle cx='67.93' cy='11.54' r='0.45' fill='#2b2b2b' stroke='#2b2b2b' stroke-width='0.2'/><text x='69.53' y='10.34' font-size='1.90' fill='#2b2b2b' text-anchor='start' font-family="Helvetica Neue, Arial, sans-serif">Tokyo</text><rect x='0' y='0' width='76.500' height='38.250' fill='none' stroke='#2b2b2b' stroke-width='0.3'/></svg><p class='sub' style='margin:1.6mm 0 1.4mm'>Standard time. Much of Europe and North America goes an hour forward in summer; India, the Gulf and most of Asia never do.</p><div style='display:flex;gap:4mm'><table class='g' style='width:36.25mm;table-layout:fixed'><tr><td style='width:5.6mm;text-align:right;padding-right:1.2mm;font-weight:700;font-size:4.40pt;height:3.42mm;border-bottom:0.3pt solid #e4e4e4'>−11</td><td style='font-size:4.40pt;color:#444;white-space:nowrap;overflow:hidden;border-bottom:0.3pt solid #e4e4e4'>Midway, Pago Pago</td></tr><tr><td style='width:5.6mm;text-align:right;padding-right:1.2mm;font-weight:700;font-size:4.40pt;height:3.42mm;border-bottom:0.3pt solid #e4e4e4'>−10</td><td style='font-size:4.40pt;color:#444;white-space:nowrap;overflow:hidden;border-bottom:0.3pt solid #e4e4e4'>Honolulu, Papeete</td></tr><tr><td style='width:5.6mm;text-align:right;padding-right:1.2mm;font-weight:700;font-size:4.40pt;height:3.42mm;border-bottom:0.3pt solid #e4e4e4'>−9</td><td style='font-size:4.40pt;color:#444;white-space:nowrap;overflow:hidden;border-bottom:0.3pt solid #e4e4e4'>Anchorage</td></tr><tr><td style='width:5.6mm;text-align:right;padding-right:1.2mm;font-weight:700;font-size:4.40pt;height:3.42mm;border-bottom:0.3pt solid #e4e4e4'>−8</td><td style='font-size:4.40pt;color:#444;white-space:nowrap;overflow:hidden;border-bottom:0.3pt solid #e4e4e4'>Los Angeles, Vancouver</td></tr><tr><td style='width:5.6mm;text-align:right;padding-right:1.2mm;font-weight:700;font-size:4.40pt;height:3.42mm;border-bottom:0.3pt solid #e4e4e4'>−7</td><td style='font-size:4.40pt;color:#444;white-space:nowrap;overflow:hidden;border-bottom:0.3pt solid #e4e4e4'>Denver, Phoenix</td></tr><tr><td style='width:5.6mm;text-align:right;padding-right:1.2mm;font-weight:700;font-size:4.40pt;height:3.42mm;border-bottom:0.3pt solid #e4e4e4'>−6</td><td style='font-size:4.40pt;color:#444;white-space:nowrap;overflow:hidden;border-bottom:0.3pt solid #e4e4e4'>Chicago, Mexico City</td></tr><tr><td style='width:5.6mm;text-align:right;padding-right:1.2mm;font-weight:700;font-size:4.40pt;height:3.42mm;border-bottom:0.3pt solid #e4e4e4'>−5</td><td style='font-size:4.40pt;color:#444;white-space:nowrap;overflow:hidden;border-bottom:0.3pt solid #e4e4e4'>New York, Toronto, Bogota</td></tr><tr><td style='width:5.6mm;text-align:right;padding-right:1.2mm;font-weight:700;font-size:4.40pt;height:3.42mm;border-bottom:0.3pt solid #e4e4e4'>−4</td><td style='font-size:4.40pt;color:#444;white-space:nowrap;overflow:hidden;border-bottom:0.3pt solid #e4e4e4'>Halifax, Santiago, Caracas</td></tr><tr><td style='width:5.6mm;text-align:right;padding-right:1.2mm;font-weight:700;font-size:4.40pt;height:3.42mm;border-bottom:0.3pt solid #e4e4e4'>−3</td><td style='font-size:4.40pt;color:#444;white-space:nowrap;overflow:hidden;border-bottom:0.3pt solid #e4e4e4'>Sao Paulo, Buenos Aires</td></tr><tr><td style='width:5.6mm;text-align:right;padding-right:1.2mm;font-weight:700;font-size:4.40pt;height:3.42mm;border-bottom:0.3pt solid #e4e4e4'>−2</td><td style='font-size:4.40pt;color:#444;white-space:nowrap;overflow:hidden;border-bottom:0.3pt solid #e4e4e4'>South Georgia</td></tr><tr><td style='width:5.6mm;text-align:right;padding-right:1.2mm;font-weight:700;font-size:4.40pt;height:3.42mm;border-bottom:0.3pt solid #e4e4e4'>−1</td><td style='font-size:4.40pt;color:#444;white-space:nowrap;overflow:hidden;border-bottom:0.3pt solid #e4e4e4'>Azores, Cabo Verde</td></tr><tr><td style='width:5.6mm;text-align:right;padding-right:1.2mm;font-weight:700;font-size:4.40pt;height:3.42mm;border-bottom:0.3pt solid #e4e4e4'>0</td><td style='font-size:4.40pt;color:#444;white-space:nowrap;overflow:hidden;border-bottom:0.3pt solid #e4e4e4'>London, Lisbon, Accra, Reykjavik</td></tr><tr><td style='width:5.6mm;text-align:right;padding-right:1.2mm;font-weight:700;font-size:4.40pt;height:3.42mm;border-bottom:0.3pt solid #e4e4e4'>+1</td><td style='font-size:4.40pt;color:#444;white-space:nowrap;overflow:hidden;border-bottom:0.3pt solid #e4e4e4'>Paris, Berlin, Rome, Lagos</td></tr><tr><td style='width:5.6mm;text-align:right;padding-right:1.2mm;font-weight:700;font-size:4.40pt;height:3.42mm;border-bottom:0.3pt solid #e4e4e4'>+2</td><td style='font-size:4.40pt;color:#444;white-space:nowrap;overflow:hidden;border-bottom:0.3pt solid #e4e4e4'>Cairo, Athens, Johannesburg</td></tr><tr><td style='width:5.6mm;text-align:right;padding-right:1.2mm;font-weight:700;font-size:4.40pt;height:3.42mm;border-bottom:0.3pt solid #e4e4e4'>+3</td><td style='font-size:4.40pt;color:#444;white-space:nowrap;overflow:hidden;border-bottom:0.3pt solid #e4e4e4'>Moscow, Nairobi, Riyadh</td></tr></table><table class='g' style='width:36.25mm;table-layout:fixed'><tr><td style='width:5.6mm;text-align:right;padding-right:1.2mm;font-weight:700;font-size:4.40pt;height:3.42mm;border-bottom:0.3pt solid #e4e4e4'>+3:30</td><td style='font-size:4.40pt;color:#444;white-space:nowrap;overflow:hidden;border-bottom:0.3pt solid #e4e4e4'>Tehran</td></tr><tr><td style='width:5.6mm;text-align:right;padding-right:1.2mm;font-weight:700;font-size:4.40pt;height:3.42mm;border-bottom:0.3pt solid #e4e4e4'>+4</td><td style='font-size:4.40pt;color:#444;white-space:nowrap;overflow:hidden;border-bottom:0.3pt solid #e4e4e4'>Dubai, Baku, Tbilisi</td></tr><tr><td style='width:5.6mm;text-align:right;padding-right:1.2mm;font-weight:700;font-size:4.40pt;height:3.42mm;border-bottom:0.3pt solid #e4e4e4'>+4:30</td><td style='font-size:4.40pt;color:#444;white-space:nowrap;overflow:hidden;border-bottom:0.3pt solid #e4e4e4'>Kabul</td></tr><tr><td style='width:5.6mm;text-align:right;padding-right:1.2mm;font-weight:700;font-size:4.40pt;height:3.42mm;border-bottom:0.3pt solid #e4e4e4'>+5</td><td style='font-size:4.40pt;color:#444;white-space:nowrap;overflow:hidden;border-bottom:0.3pt solid #e4e4e4'>Karachi, Tashkent</td></tr><tr><td style='width:5.6mm;text-align:right;padding-right:1.2mm;font-weight:700;font-size:4.40pt;height:3.42mm;border-bottom:0.3pt solid #e4e4e4'>+5:30</td><td style='font-size:4.40pt;color:#444;white-space:nowrap;overflow:hidden;border-bottom:0.3pt solid #e4e4e4'>Delhi, Mumbai, Colombo</td></tr><tr><td style='width:5.6mm;text-align:right;padding-right:1.2mm;font-weight:700;font-size:4.40pt;height:3.42mm;border-bottom:0.3pt solid #e4e4e4'>+5:45</td><td style='font-size:4.40pt;color:#444;white-space:nowrap;overflow:hidden;border-bottom:0.3pt solid #e4e4e4'>Kathmandu</td></tr><tr><td style='width:5.6mm;text-align:right;padding-right:1.2mm;font-weight:700;font-size:4.40pt;height:3.42mm;border-bottom:0.3pt solid #e4e4e4'>+6</td><td style='font-size:4.40pt;color:#444;white-space:nowrap;overflow:hidden;border-bottom:0.3pt solid #e4e4e4'>Dhaka, Almaty</td></tr><tr><td style='width:5.6mm;text-align:right;padding-right:1.2mm;font-weight:700;font-size:4.40pt;height:3.42mm;border-bottom:0.3pt solid #e4e4e4'>+6:30</td><td style='font-size:4.40pt;color:#444;white-space:nowrap;overflow:hidden;border-bottom:0.3pt solid #e4e4e4'>Yangon</td></tr><tr><td style='width:5.6mm;text-align:right;padding-right:1.2mm;font-weight:700;font-size:4.40pt;height:3.42mm;border-bottom:0.3pt solid #e4e4e4'>+7</td><td style='font-size:4.40pt;color:#444;white-space:nowrap;overflow:hidden;border-bottom:0.3pt solid #e4e4e4'>Bangkok, Jakarta, Hanoi</td></tr><tr><td style='width:5.6mm;text-align:right;padding-right:1.2mm;font-weight:700;font-size:4.40pt;height:3.42mm;border-bottom:0.3pt solid #e4e4e4'>+8</td><td style='font-size:4.40pt;color:#444;white-space:nowrap;overflow:hidden;border-bottom:0.3pt solid #e4e4e4'>Singapore, Beijing, Perth</td></tr><tr><td style='width:5.6mm;text-align:right;padding-right:1.2mm;font-weight:700;font-size:4.40pt;height:3.42mm;border-bottom:0.3pt solid #e4e4e4'>+9</td><td style='font-size:4.40pt;color:#444;white-space:nowrap;overflow:hidden;border-bottom:0.3pt solid #e4e4e4'>Tokyo, Seoul</td></tr><tr><td style='width:5.6mm;text-align:right;padding-right:1.2mm;font-weight:700;font-size:4.40pt;height:3.42mm;border-bottom:0.3pt solid #e4e4e4'>+9:30</td><td style='font-size:4.40pt;color:#444;white-space:nowrap;overflow:hidden;border-bottom:0.3pt solid #e4e4e4'>Adelaide, Darwin</td></tr><tr><td style='width:5.6mm;text-align:right;padding-right:1.2mm;font-weight:700;font-size:4.40pt;height:3.42mm;border-bottom:0.3pt solid #e4e4e4'>+10</td><td style='font-size:4.40pt;color:#444;white-space:nowrap;overflow:hidden;border-bottom:0.3pt solid #e4e4e4'>Sydney, Brisbane, Port Moresby</td></tr><tr><td style='width:5.6mm;text-align:right;padding-right:1.2mm;font-weight:700;font-size:4.40pt;height:3.42mm;border-bottom:0.3pt solid #e4e4e4'>+11</td><td style='font-size:4.40pt;color:#444;white-space:nowrap;overflow:hidden;border-bottom:0.3pt solid #e4e4e4'>Noumea, Honiara</td></tr><tr><td style='width:5.6mm;text-align:right;padding-right:1.2mm;font-weight:700;font-size:4.40pt;height:3.42mm;border-bottom:0.3pt solid #e4e4e4'>+12</td><td style='font-size:4.40pt;color:#444;white-space:nowrap;overflow:hidden;border-bottom:0.3pt solid #e4e4e4'>Auckland, Suva</td></tr></table></div></div></div><script>const SEED = 1296;
+const INK = "#243a63";
+const INK_ALT = "#2b2b33";
+const HAND = '"Ink Free", "Segoe Print", "Bradley Hand ITC", cursive';
+const YEAR = "2026";
+const UPTO = 291;
+const COVER_SIZE = "24pt";
+const NAME_SIZE = "7pt";
+const TOTAL_SIZE = "5.5pt";
+const NOTE_SIZE = "6pt";
+const FILM_SIZE = "4.4pt";
+const COUNT_SIZE = "5pt";
+const HABIT_NAMES = ['Walked', 'Gym', 'Read', 'No alcohol', 'Wrote'];
+const HABIT_DENSITY = [0.78, 0.34, 0.55, 0.62, 0.41];
+const HABIT_OFFSET = 3;
+const WATCHED = [["F Dune Part Two", "T Shogun", "F Challengers", "T Fallout", "F Civil War"], ["F Furiosa", "T Baby Reindeer", "F Inside Out 2"], ["F Twisters", "T The Bear S3", "F Alien Romulus", "F The Substance", "T Ripley", "F The Wild Robot"], ["F Anora", "F Conclave", "T 3 Body Problem", "F Heretic"], ["F Gladiator II", "T The Penguin", "F Wicked", "F Nosferatu", "F The Brutalist", "T Agatha All Along", "F A Real Pain"], ["F Sing Sing", "F Longlegs", "T Arcane S2", "F The Fall Guy", "F Emilia Perez"], ["F Trap", "F Blitz", "T Slow Horses S4", "F Kinds of Kindness", "F A Minecraft Mv", "F Sinners", "T Industry S3", "F Thunderbolts"], ["F Final Reckoning", "F Lilo & Stitch", "F F1", "T Disclaimer", "F Superman", "F Fantastic Four"], ["F Weapons", "T Mr & Mrs Smith", "F 28 Years Later", "T Say Nothing"], ["F Materialists", "T True Det: Night"], [], []];
+const FILM_OFFSET = 0;
+const NOTE_LINES = ['Best month was June — walked almost every day,', 'and it shows. Three weeks without a bad day.', '', 'October fell apart. Worth remembering that the', 'gym streak broke first, about ten days before', 'the grid went grey.', '', 'Next year: fewer habits, bigger squares.'];
+
+// ---- seeded randomness, so the mockups are stable between runs -------------
+function mulberry32(a){return function(){a|=0;a=a+0x6D2B79F5|0;var t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;}}
+const rnd = mulberry32(SEED);
+const between = (a,b)=>a+rnd()*(b-a);
+const pick = a => a[Math.floor(rnd()*a.length)];
+const NS = "http://www.w3.org/2000/svg";
+
+function overlay(el){
+  const cs = getComputedStyle(el);
+  if (cs.position === "static") el.style.position = "relative";
+  const r = el.getBoundingClientRect();
+  const svg = document.createElementNS(NS,"svg");
+  svg.setAttribute("viewBox", `0 0 ${r.width} ${r.height}`);
+  svg.style.cssText = "position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none";
+  el.appendChild(svg);
+  return [svg, r.width, r.height];
+}
+
+// a shaded square: rough edges, slight rotation, uneven ink
+function shade(td){
+  const [svg,w,h] = overlay(td);
+  const i = between(0.02,0.11)*w;
+  const j = () => between(-0.055,0.055)*w;
+  const p = document.createElementNS(NS,"path");
+  const x0=i+j(), y0=i+j(), x1=w-i+j(), y1=h-i+j();
+  p.setAttribute("d",
+    `M${x0},${y0} Q${(x0+x1)/2+j()},${y0+j()} ${x1},${y0+j()}`+
+    ` Q${x1+j()},${(y0+y1)/2} ${x1+j()},${y1}`+
+    ` Q${(x0+x1)/2+j()},${y1+j()} ${x0+j()},${y1+j()}`+
+    ` Q${x0+j()},${(y0+y1)/2} ${x0},${y0} Z`);
+  p.setAttribute("fill", rnd()<0.12 ? INK_ALT : INK);
+  p.setAttribute("opacity", between(0.80,0.95).toFixed(2));
+  p.setAttribute("transform", `rotate(${between(-3,3).toFixed(1)} ${w/2} ${h/2})`);
+  svg.appendChild(p);
+}
+
+// a crossed-out square: two bowed strokes that overshoot a little
+function cross(td){
+  const [svg,w,h] = overlay(td);
+  const i = 0.14*w;                       // keep the X inside its own cell
+  const o = () => between(-0.06,0.06)*w;  // just enough wobble to look drawn
+  const ink = rnd()<0.12 ? INK_ALT : INK;
+  for (const [a,b,c,d] of [[i,i,w-i,h-i],[w-i,i,i,h-i]]){
+    const l = document.createElementNS(NS,"path");
+    l.setAttribute("d", `M${a+o()},${b+o()} Q${w/2+o()},${h/2+o()} ${c+o()},${d+o()}`);
+    l.setAttribute("stroke", ink);
+    l.setAttribute("fill","none");
+    l.setAttribute("stroke-width", (w*between(0.065,0.095)).toFixed(2));
+    l.setAttribute("stroke-linecap","round");
+    l.setAttribute("opacity", between(0.78,0.95).toFixed(2));
+    svg.appendChild(l);
+  }
+}
+
+// handwriting, with a little rotation and baseline drift per run
+function write(el, text, opts){
+  opts = opts || {};
+  const s = document.createElement("span");
+  s.textContent = text;
+  s.style.cssText =
+    `font-family:${HAND};color:${opts.ink||INK};white-space:nowrap;`+
+    `font-size:${opts.size||"6pt"};line-height:1;`+
+    `display:inline-block;transform:rotate(${between(-1.6,1.6).toFixed(2)}deg)`+
+    ` translateY(${between(-0.4,0.4).toFixed(2)}mm);`+
+    (opts.css||"");
+  el.appendChild(s);
+  return s;
+}
+
+function floatWrite(host, text, x, y, opts){
+  opts = opts || {};
+  const cs = getComputedStyle(host);
+  if (cs.position === "static") host.style.position = "relative";
+  const d = document.createElement("div");
+  d.style.cssText = `position:absolute;left:${x};top:${y};pointer-events:none`;
+  host.appendChild(d);
+  return write(d, text, opts);
+}
+
+// ---- the grids -------------------------------------------------------------
+// live cells only: never touch a dead date or the 29 Feb square
+function liveRows(table){
+  return [...table.rows].filter(r => r.querySelector("td.cell"));
+}
+
+// Days are sticky: yesterday pulls today toward itself, which is what makes
+// real tracker grids read as runs and slumps rather than static.
+const STICK = 0.42;
+function fillYearGrid(table, upto, pGood, pBad){
+  let prev = 1;
+  const pCross = pBad > 0 ? pBad / Math.max(0.01, 1 - pGood) : 0;
+  liveRows(table).forEach((row, m) => {
+    [...row.cells].forEach((td, i) => {
+      if (!td.classList.contains("cell")) return;
+      if (m*31 + i > upto) return;         // the year is still in progress
+      const p = pGood + STICK * (prev - pGood);
+      const on = rnd() < p;
+      prev = on ? 1 : 0;
+      if (on) shade(td);
+      else if (rnd() < pCross) cross(td);
+    });
+  });
+}
+
+function fillBlank(el, text, size){
+  // write over a "total ______" style rule
+  const t = el.textContent;
+  el.textContent = "";
+  const before = document.createTextNode(t.split("___")[0]);
+  el.appendChild(before);
+  write(el, text, {size: size || "6.5pt"});
+  el.appendChild(document.createTextNode(t.split("/").slice(-1)[0] ? " / "+t.split("/").slice(-1)[0].trim() : ""));
+}
+
+// ---- per-page behaviour ----------------------------------------------------
+function run(){
+  const kind = document.body.dataset.kind;
+  const pad = document.querySelector(".turn") || document.querySelector(".pad");
+
+  if (kind === "cover"){
+    const box = document.querySelector(".wbox");
+    box.style.position = "relative";
+    floatWrite(box, YEAR, "50%", "50%", {
+      size: COVER_SIZE,
+      css: "transform-origin:center;"});
+    const sp = box.lastChild.firstChild;
+    box.lastChild.style.transform = "translate(-50%,-55%)";
+  }
+
+  if (kind === "glance"){
+    const t = pad.querySelector("table.g");
+    fillYearGrid(t, UPTO, 0.72, 0.13);
+  }
+
+  if (kind === "habits"){
+    const names = [...pad.querySelectorAll(".nameline")];
+    const tables = [...pad.querySelectorAll("table.g")];
+    const totals = [...pad.querySelectorAll(".sub")].filter(e => e.textContent.includes("365"));
+    names.forEach((n, k) => {
+      const idx = HABIT_OFFSET + k;
+      if (idx >= HABIT_NAMES.length) return;      // the last rule stays blank
+      n.style.position = "relative";
+      floatWrite(n, HABIT_NAMES[idx], "1mm", "-0.4mm", {size: NAME_SIZE});
+    });
+    tables.forEach((t, k) => {
+      const idx = HABIT_OFFSET + k;
+      if (idx >= HABIT_NAMES.length) return;
+      fillYearGrid(t, UPTO, HABIT_DENSITY[idx], 0);
+    });
+    totals.forEach((el, k) => {
+      const idx = HABIT_OFFSET + k;
+      if (idx >= HABIT_NAMES.length) return;
+      const n = Math.round(UPTO * HABIT_DENSITY[idx] * 0.97);
+      el.innerHTML = "total ";
+      write(el, String(n), {size: TOTAL_SIZE});
+      el.appendChild(document.createTextNode(" / 365"));
+    });
+  }
+
+  if (kind === "films"){
+    const tables = pad.querySelectorAll("table.g");
+    const grid = tables[0], axis = tables[1];
+    const rows = [...grid.rows];
+    const cols = rows[0].cells.length;
+    let sum = 0;
+    for (let c = 0; c < cols; c++){
+      const month = WATCHED[FILM_OFFSET + c] || [];
+      sum += month.length;
+      for (let k = 0; k < month.length && k < rows.length; k++){
+        const td = rows[rows.length - 1 - k].cells[c];   // stack upward
+        td.style.position = "relative";
+        floatWrite(td, month[k], "0.5mm", "0.3mm",
+                   {size: FILM_SIZE, ink: rnd() < 0.15 ? INK_ALT : INK});
+      }
+      const cell = axis.rows[1].cells[c];
+      cell.style.position = "relative";
+      if (month.length) floatWrite(cell, String(month.length), "50%", "4%",
+                           {size: COUNT_SIZE, css:"transform:translateX(-50%)"});
+    }
+    const tot = [...pad.querySelectorAll(".sub")].filter(e => e.textContent.includes("Total"))[0];
+    if (tot){
+      tot.innerHTML = tot.textContent.split("___")[0];
+      write(tot, String(sum), {size: TOTAL_SIZE});
+    }
+  }
+
+  if (kind === "notes"){
+    const rules = [...pad.querySelectorAll("div")].filter(
+      d => (d.getAttribute("style")||"").includes("border-bottom"));
+    NOTE_LINES.forEach((line, k) => {
+      if (!line || k >= rules.length) return;
+      rules[k].style.position = "relative";
+      floatWrite(rules[k], line, "1mm", "-0.2mm", {size: NOTE_SIZE});
+    });
+  }
+}
+document.addEventListener("DOMContentLoaded", run);
+</script></body></html>

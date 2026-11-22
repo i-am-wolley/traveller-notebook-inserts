@@ -5,7 +5,7 @@ import {
   CATALOGUE, SIZES, byId, expand, readingPdf, imposedPdf, previewPage,
   summary,
 } from './booklet.js';
-import { PUZZLE_GRADES, poolSize } from './pages.js';
+import { PUZZLE_GRADES, newSeed } from './pages.js';
 
 const PRESETS = {
   year: {
@@ -42,7 +42,7 @@ const state = {
   name: 'year-book',
   // one set of puzzle settings for the whole booklet, not per page
   sudoku: { grades: [...PUZZLE_GRADES], oneUp: false, working: false,
-    date: false, title: '' },
+    date: false, title: '', seed: newSeed() },
 };
 
 const $ = (id) => document.getElementById(id);
@@ -221,16 +221,7 @@ function render() {
   $('sudopts').hidden = !state.items.some(
     (i) => i.type === 'sudoku' || i.type === 'sudoku-cover');
 
-  // the pool is finite; say so rather than quietly repeating puzzles
-  const per = state.sudoku.oneUp ? 1 : SIZES[state.size].sudoku_per_page;
-  const asked = state.items.filter((i) => i.type === 'sudoku').length * per;
-  const have = poolSize(state.sudoku.grades);
-  $('sud-warn').hidden = asked <= have;
-  $('sud-warn').textContent = asked > have
-    ? `${asked} puzzles asked for but only ${have} in the chosen `
-      + `grade${state.sudoku.grades.length === 1 ? '' : 's'}, so some repeat.`
-      + ' Add another grade, or use fewer pages.'
-    : '';
+
   drawSizes();
   drawList();
   drawPreview();
@@ -310,6 +301,16 @@ for (const [id, key] of [['sud-oneup', 'oneUp'], ['sud-working', 'working'],
 }
 $('sud-title').oninput = () => {
   state.sudoku.title = $('sud-title').value.trim();
+  render();
+};
+$('sud-seed').value = state.sudoku.seed;
+$('sud-seed').oninput = () => {
+  state.sudoku.seed = $('sud-seed').value.trim() || 'year-book';
+  render();
+};
+$('sud-new').onclick = () => {
+  state.sudoku.seed = newSeed();
+  $('sud-seed').value = state.sudoku.seed;
   render();
 };
 $('prev').onclick = () => {

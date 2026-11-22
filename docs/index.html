@@ -13,6 +13,10 @@ print-exact imposed PDF for a saddle-stitched Traveller's Notebook booklet.">
 
 <header class="top">
   <div class="wrap">
+    <nav class="tabs">
+      <a href="./" aria-current="page">Booklet builder</a>
+      <a href="sudoku/">Sudoku book</a>
+    </nav>
     <h1>Booklet builder</h1>
     <p>Pick the inserts you want, put them in order, and get a print-exact
       PDF — imposed onto A4 with cut and fold marks, ready to fold into a
@@ -60,7 +64,13 @@ print-exact imposed PDF for a saddle-stitched Traveller's Notebook booklet.">
           <div class="orow"><span>Title</span>
             <input type="text" id="sud-title" placeholder="Sudoku"
               maxlength="28"></div>
-          <p class="warn" id="sud-warn" hidden></p>
+          <div class="orow"><span>Seed</span>
+            <input type="text" id="sud-seed" maxlength="16">
+            <button class="link" id="sud-new">new puzzles</button></div>
+          <p class="hint" style="margin-top:7px">Puzzles are generated here,
+            in your browser. The same seed always gives the same set; a new
+            one gives a set nobody has seen.
+            <a href="sudoku/">More control on the sudoku page →</a></p>
         </div>
         <div class="why" id="why"></div>
         <div class="fillpick">

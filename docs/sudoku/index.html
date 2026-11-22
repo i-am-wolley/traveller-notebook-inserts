@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sudoku book — Traveller's Notebook inserts</title>
+<meta name="description" content="Generate a sudoku booklet for a Traveller's
+Notebook. Every puzzle has exactly one solution, and the PDF comes imposed
+onto A4 with cut and fold marks.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><text y='13' font-size='13'>🔢</text></svg>">
+<link rel="stylesheet" href="../css/app.css">
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <nav class="tabs">
+      <a href="../">Booklet builder</a>
+      <a href="./" aria-current="page">Sudoku book</a>
+    </nav>
+    <h1>Sudoku book</h1>
+    <p>A booklet of nothing but puzzles, sized for your notebook. Every
+      puzzle is dug out here in your browser and checked to have exactly one
+      solution — so a new seed really is a set nobody has seen.</p>
+  </div>
+</header>
+
+<main class="wrap studio">
+
+  <div class="controls">
+
+    <section class="grp">
+      <h3>Notebook</h3>
+      <div class="seg" id="c-size"></div>
+    </section>
+
+    <section class="grp">
+      <h3>Difficulty</h3>
+      <div class="checks" id="c-grades"></div>
+      <p class="hint">Easy and Medium always fall to simple logic. Hard and
+        Very hard may need a guess. Picking several mixes them in turn.</p>
+    </section>
+
+    <section class="grp">
+      <h3>Puzzles</h3>
+      <div class="stepper">
+        <button id="c-less" aria-label="Fewer">−</button>
+        <span id="c-count">24</span>
+        <button id="c-more" aria-label="More">+</button>
+      </div>
+      <label class="line"><input type="checkbox" id="c-oneup">
+        One big grid a page</label>
+    </section>
+
+    <section class="grp">
+      <h3>Numbering</h3>
+      <div class="seg" id="c-numbering"></div>
+    </section>
+
+    <section class="grp">
+      <h3>Type</h3>
+      <div class="seg" id="c-face"></div>
+    </section>
+
+    <section class="grp">
+      <h3>Pages</h3>
+      <label class="line"><input type="checkbox" id="c-cover" checked>
+        Cover page</label>
+      <label class="line"><input type="checkbox" id="c-answers" checked>
+        Answers at the back</label>
+      <label class="line"><input type="checkbox" id="c-guide" checked>
+        Printing and folding guide</label>
+      <label class="line"><input type="checkbox" id="c-working">
+        Ruled working lines under each grid</label>
+      <label class="line"><input type="checkbox" id="c-date">
+        Date line instead of a timer</label>
+      <label class="line"><input type="checkbox" id="c-nothing">
+        No timer or date line</label>
+    </section>
+
+    <section class="grp">
+      <h3>Title</h3>
+      <input type="text" id="c-title" placeholder="Sudoku" maxlength="28">
+    </section>
+
+    <section class="grp">
+      <h3>Seed</h3>
+      <div class="seedrow">
+        <input type="text" id="c-seed" maxlength="16">
+        <button id="c-newseed">New puzzles</button>
+      </div>
+      <p class="hint">Keep the seed to reprint the same book. Change it for a
+        fresh set.</p>
+    </section>
+
+    <section class="grp">
+      <h3>Spare pages</h3>
+      <div class="seg" id="c-fill"></div>
+    </section>
+
+  </div>
+
+  <div class="output">
+    <div class="previewbox">
+      <div class="pvhead">
+        <button id="prev" aria-label="Previous page">←</button>
+        <span id="pvlabel">—</span>
+        <button id="next" aria-label="Next page">→</button>
+      </div>
+      <canvas id="preview" aria-label="Page preview"></canvas>
+      <p class="hint" id="pvnote"></p>
+    </div>
+
+    <dl class="facts" id="facts"></dl>
+
+    <div class="downloads">
+      <button class="primary" id="dl-print">Print PDF — A4, imposed</button>
+      <button id="dl-read">Reading-order PDF</button>
+    </div>
+    <p class="hint" id="dlnote"></p>
+
+    <details class="howto">
+      <summary>How to print it</summary>
+      <ol class="how">
+        <li>Print the imposed PDF on A4 at <b>100% / Actual size</b> — never
+          “Fit to page”.</li>
+        <li>Double-sided, flipping on the <b>short edge</b> for regular and
+          the <b>long edge</b> for passport. Hold a sheet to the light: the
+          back of page 1 must be page 2, the same way up.</li>
+        <li>Trim the dashed cut lines, fold down the dashed centre, nest the
+          sheets in order, staple through the fold.</li>
+      </ol>
+      <p class="hint">The guide page inside the booklet repeats all of this
+        with the exact measurements for the book you built.</p>
+    </details>
+  </div>
+
+</main>
+
+<footer class="wrap">
+  <p>Generated in your browser — nothing is uploaded, no library is fetched.
+    Puzzles are checked for a single solution as they are made.</p>
+</footer>
+
+<script type="module" src="../js/studio.js"></script>
+</body>
+</html>

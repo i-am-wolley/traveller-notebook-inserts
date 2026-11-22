@@ -87,7 +87,8 @@ export const CATALOGUE = [
     pages: (s, o, st, ctx) => [{
       label: 'Sudoku cover',
       paint: (d, sz, p) => P.pSudokuCover(d, sz, p, o.title || 'Sudoku',
-        `${ctx.puzzles.length} puzzles, ${gradeLine(o)}. One solution each.`),
+        `${ctx.puzzles.length} puzzles, ${gradeLine(o)}. One solution each.`,
+        o),
     }],
   },
   {
@@ -106,8 +107,7 @@ export const CATALOGUE = [
           label: set.length > 1
             ? `Sudoku ${start + 1}–${start + set.length}`
             : `Sudoku ${start + 1}`,
-          paint: (d, sz, p) => P.pSudoku(d, sz, p, set, start + 1,
-            { working: o.working, date: o.date }),
+          paint: (d, sz, p) => P.pSudoku(d, sz, p, set, start + 1, o),
         });
       }
       return out;
@@ -121,7 +121,7 @@ export const CATALOGUE = [
       const all = ctx.puzzles;
       if (!all.length) {
         return [{ label: 'Sudoku answers (no puzzles yet)',
-          paint: (d, sz, p) => P.pSudokuAnswers(d, sz, p, [], 1) }];
+          paint: (d, sz, p) => P.pSudokuAnswers(d, sz, p, [], 1, o) }];
       }
       const per = 8;
       const out = [];
@@ -129,7 +129,7 @@ export const CATALOGUE = [
         const chunk = all.slice(i, i + per);
         out.push({
           label: `Sudoku answers ${i + 1}–${i + chunk.length}`,
-          paint: (d, sz, p) => P.pSudokuAnswers(d, sz, p, chunk, i + 1),
+          paint: (d, sz, p) => P.pSudokuAnswers(d, sz, p, chunk, i + 1, o),
         });
       }
       return out;
@@ -197,13 +197,15 @@ function puzzlesFor(sizeKey, items) {
   const s = SIZES[sizeKey];
   let n = 0;
   let grades = null;
+  let seed = 'year-book';
   for (const it of items) {
     if (it.type !== 'sudoku') continue;
     const o = it.opt || {};
     n += (o.n || 1) * (o.oneUp ? 1 : s.sudoku_per_page);
     if (o.grades && o.grades.length) grades = o.grades;
+    if (o.seed) seed = o.seed;
   }
-  return P.pickPuzzles(n, grades);
+  return P.pickPuzzles(n, grades, seed);
 }
 
 export function expand(sizeKey, items, fill = 'blank') {

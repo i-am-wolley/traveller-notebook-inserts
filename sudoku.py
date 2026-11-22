@@ -133,6 +133,19 @@ def batch(n, seed=20260101):
     return [make(GRADES[i % len(GRADES)], rnd) for i in range(n)]
 
 
+def by_grade(per, seed=20260101):
+    """`per` puzzles of each grade, keyed by the grade's name.
+
+    A separate stream per grade, so asking for more Hard ones does not change
+    which Easy ones you get.
+    """
+    out = {}
+    for i, g in enumerate(GRADES):
+        rnd = random.Random(seed + i * 1009)
+        out[g[0]] = [make(g, rnd) for _ in range(per)]
+    return out
+
+
 def show(p):
     out = []
     for r in range(9):

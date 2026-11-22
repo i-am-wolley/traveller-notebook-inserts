@@ -9,7 +9,7 @@ import { INK, RULE, GREY, textWidth } from './surface.js';
 import { SIZES, A4, CITIES, SMALL_SET, ZONES, MONTHS, DAYS }
   from './geometry.js';
 import { POLYS } from './mapdata.js';
-import { PUZZLES } from './puzzles.js';
+import { POOL, GRADES } from './puzzles.js';
 
 const PT = 25.4 / 72;                  // points to millimetres
 
@@ -255,7 +255,27 @@ export function pBlank() { /* deliberately nothing */ }
 
 // ---------------------------------------------------------------- sudoku
 
-export function puzzlePool() { return PUZZLES; }
+export { POOL as PUZZLE_POOL, GRADES as PUZZLE_GRADES };
+
+// how many distinct puzzles are available for a given set of grades
+export function poolSize(grades) {
+  const use = (grades && grades.length) ? grades : GRADES;
+  return use.reduce((t, g) => t + (POOL[g] ? POOL[g].length : 0), 0);
+}
+
+export function pickPuzzles(n, grades) {
+  // cycle the chosen grades, taking each from its own stream so changing
+  // one grade's count does not reshuffle the others
+  const use = (grades && grades.length) ? grades : GRADES;
+  const out = [];
+  for (let i = 0; i < n; i += 1) {
+    const g = use[i % use.length];
+    const list = POOL[g] || POOL[GRADES[0]];
+    const [puzzle, solution] = list[Math.floor(i / use.length) % list.length];
+    out.push({ grade: g, puzzle, solution });
+  }
+  return out;
+}
 
 function sudokuFrame(d, x, y, side, clues) {
   const c = side / 9;
@@ -277,25 +297,49 @@ function sudokuFrame(d, x, y, side, clues) {
   }
 }
 
-export function pSudoku(d, s, p, puzzles, startNo) {
+export function pSudoku(d, s, p, puzzles, startNo, opt = {}) {
   const nUp = puzzles.length;
+  const big = s.w > 100;
   const hdr = s.h3 * PT + 1.6;
-  const side = Math.min(p.w, (p.h - nUp * hdr - 6) / nUp);
-  const gap = Math.max(0.6, (p.h - nUp * (side + hdr) - 3) / (nUp * 2));
+  const lineGap = big ? 4.6 : 3.8;
+  const lines = opt.working ? (big ? 3 : 2) : 0;
+  const foot = lines ? lines * lineGap + 2 : 0;
+  const side = Math.min(p.w, (p.h - nUp * (hdr + foot) - 6) / nUp);
+  const gap = Math.max(0.6, (p.h - nUp * (side + hdr + foot) - 3) / (nUp * 2));
   const x = p.x + (p.w - side) / 2;
   let y = p.y;
   puzzles.forEach((pz, i) => {
     y += gap;
-    heading(d, s, x, y, `${startNo + i} · ${pz[0]}`, 3);
+    heading(d, s, x, y, `${startNo + i} · ${pz.grade}`, 3);
     const base = y + s.h3 * PT;
     const rule = side * 0.26;
-    d.text(x + side - rule - 0.8, base, 'time',
+    d.text(x + side - rule - 0.8, base, opt.date ? 'date' : 'time',
       { size: s.small, color: '#666', align: 'r' });
     writeLine(d, x + side - rule, base + 0.5, rule);
     y = base + 1.6;
-    sudokuFrame(d, x, y, side, pz[1]);
-    y += side + gap;
+    sudokuFrame(d, x, y, side, pz.puzzle);
+    y += side;
+    for (let k = 1; k <= lines; k += 1) {
+      d.line(x, y + 1.6 + k * lineGap, x + side, y + 1.6 + k * lineGap,
+        { color: '#d8d8d8', w: 0.106 });
+    }
+    y += foot + gap;
   });
+}
+
+export function pSudokuCover(d, s, p, title, subtitle) {
+  let y = p.y + p.h * 0.11;
+  y = heading(d, s, p.x, y, title, 1);
+  d.line(p.x, y + 1.2, p.x + p.w, y + 1.2, LINE);
+  y = para(d, s, p.x, y + 2.6, p.w, subtitle);
+  // an empty grid as the device, sized off the page like everything else
+  const side = p.w * 9 / 11;
+  const bh = s.h2 * 1.5;
+  const gy = y + (p.y + p.h - bh - 4 - y - side) / 2;
+  sudokuFrame(d, p.x + (p.w - side) / 2, gy, side, null);
+  d.text(p.x, p.y + p.h - bh - 2.2, 'Started',
+    { size: s.small, color: '#666' });
+  d.rect(p.x, p.y + p.h - bh, p.w, bh, LINE);
 }
 
 export function pSudokuAnswers(d, s, p, puzzles, startNo) {
@@ -308,7 +352,7 @@ export function pSudokuAnswers(d, s, p, puzzles, startNo) {
   puzzles.forEach((pz, i) => {
     const cx = p.x + (i % cols) * (side + 5);
     const cy = y + Math.floor(i / cols) * (side + 4);
-    d.text(cx, cy + s.small * PT, `${startNo + i} · ${pz[0]}`,
+    d.text(cx, cy + s.small * PT, `${startNo + i} · ${pz.grade}`,
       { size: s.small, color: '#666' });
     const gy = cy + s.small * PT + 1.0;
     const c = side / 9;
@@ -320,7 +364,7 @@ export function pSudokuAnswers(d, s, p, puzzles, startNo) {
     }
     for (let k = 0; k < 81; k += 1) {
       d.text(cx + ((k % 9) + 0.5) * c,
-        gy + (Math.floor(k / 9) + 0.5) * c + fs * PT * 0.36, pz[2][k],
+        gy + (Math.floor(k / 9) + 0.5) * c + fs * PT * 0.36, pz.solution[k],
         { size: fs, color: '#555', align: 'c' });
     }
   });

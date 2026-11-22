@@ -14,9 +14,17 @@ cut and fold marks. The plain files are reading copies at true insert size.
 ```
 regular/   year-book-regular-A4.pdf     8 sides, A4 landscape   ← print this
            year-book-regular.pdf       16 pages, 110 × 210 mm
+           sudoku-regular-A4.pdf       10 sides, A4 landscape   ← print this
+           sudoku-regular.pdf          20 pages, 110 × 210 mm
 passport/  year-book-passport-A4.pdf    4 sides, A4 portrait    ← print this
            year-book-passport.pdf      16 pages, 89 × 124 mm
+           sudoku-passport-A4.pdf       6 sides, A4 portrait    ← print this
+           sudoku-passport.pdf         20 pages, 89 × 124 mm
 ```
+
+There are two ready-made booklets: the **Year Book** below, and a **Sudoku
+book** — 24 graded puzzles with the answers at the back. Change what is in
+the sudoku book at the top of `build_sudoku.py`.
 
 The `.html` beside each PDF is the source. To change anything, edit
 `build_inserts.py` (page content) or `build_core.py` (geometry and CSS), then:
@@ -61,6 +69,14 @@ Generated in `sudoku.py`: a filled grid dug out at random, with every removal
 checked to leave exactly one solution. Easy and Medium are solvable by naked
 and hidden singles alone; Hard and Very hard may need a guess. The seed is
 fixed, so a rebuild never reshuffles a booklet you have already printed.
+
+The grade is about how the puzzle solves, not just how many clues it has —
+digging to a clue count without checking uniqueness is the usual shortcut,
+and it produces puzzles with several valid answers.
+
+In the booklet builder you can choose which grades to use, one big grid a
+page or two, ruled working lines under each grid, and a date line instead of
+a timer. `build_sudoku.py` has the same knobs at the top of the file.
 
 ## The grids
 
@@ -151,3 +167,27 @@ python make_mapdata.py      # the coastline (needs the network)
 Fonts are the PDF base-14 — Helvetica and Times — so nothing is embedded and
 the files stay small. Advance widths are taken from PyMuPDF at build time, so
 the browser measures text exactly as the PDF will set it.
+
+## Spare pages
+
+A saddle-stitched booklet is a stack of folded sheets, which forces some
+arithmetic on the content: the total has to be a multiple of four, odd pages
+are always on the right of an open spread and even pages on the left. Rather
+than placing blanks by hand, each insert says what it needs and `layout.py`
+works the rest out:
+
+| Constraint | Means |
+|---|---|
+| `spread` | its pages are a facing pair, so the first must be even |
+| `start="recto"` | it begins on a right-hand page |
+| `at_end` | it goes at the back |
+
+So the world time chart's map always lands on a left-hand page with the table
+opposite, and on passport — where the films chart is two pages instead of one
+— a spare page appears earlier to keep both halves of the year in view at
+once. Change the size and the padding moves on its own.
+
+Whatever is left over goes just before the last insert, except for one case:
+a two-page ending can only face if a page goes *after* it, so the booklet
+gets a spare back page instead. The builder lists the reason for every spare
+page it adds, and lets you fill them with nothing, ruled lines or a dot grid.

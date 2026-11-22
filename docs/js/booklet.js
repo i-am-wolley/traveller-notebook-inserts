@@ -2,8 +2,10 @@
 // pages a saddle-stitched booklet needs, and the A4 imposition.
 
 import { SIZES, A4, MONTHS } from './geometry.js';
+import { fit, plan, summary } from './layout.js';
 import { Pdf, CanvasSurface, INK } from './surface.js';
 import * as P from './pages.js';
+import { PUZZLE_GRADES } from './pages.js';
 
 export { SIZES, A4 };
 
@@ -12,6 +14,7 @@ export const CATALOGUE = [
     id: 'cover',
     name: 'Cover',
     blurb: 'Title, a rule, and a box for the year.',
+    fit: { start: 'recto' },
     pages: () => [{ label: 'Cover', paint: (d, s, p) => P.pCover(d, s, p) }],
   },
   {
@@ -29,9 +32,9 @@ export const CATALOGUE = [
     name: 'Habit grids',
     blurb: 'Three blank-named year grids a page. Name them yourself.',
     repeat: true,
-    pages: (s, n, st) => {
+    pages: (s, o, st) => {
       const out = [];
-      for (let i = 0; i < (n || 1); i += 1) {
+      for (let i = 0; i < (o.n || 1); i += 1) {
         const first = st.habitsSeen === 0;
         st.habitsSeen += 1;
         out.push({
@@ -45,7 +48,9 @@ export const CATALOGUE = [
   {
     id: 'films',
     name: 'Films and shows',
-    blurb: 'A stack chart by month. One page on regular, two on passport.',
+    blurb: 'A stack chart by month. One page on regular, two on passport, '
+      + 'kept facing so the whole year is in view.',
+    fit: (s) => (s.w > 100 ? {} : { spread: true }),
     pages: (s) => (s.w > 100
       ? [{
         label: 'Films and shows',
@@ -67,7 +72,7 @@ export const CATALOGUE = [
     name: 'World time chart',
     blurb: 'Zone map and every standard offset, then the conversion table. '
       + 'Kept on facing pages.',
-    spread: true,
+    fit: { spread: true },
     pages: () => [
       { label: 'Time chart — map', paint: (d, s, p) => P.pTimeMap(d, s, p) },
       { label: 'Time chart — table',
@@ -75,24 +80,34 @@ export const CATALOGUE = [
     ],
   },
   {
+    id: 'sudoku-cover',
+    name: 'Sudoku cover',
+    blurb: 'A title page for a booklet that is only puzzles.',
+    fit: { start: 'recto' },
+    pages: (s, o, st, ctx) => [{
+      label: 'Sudoku cover',
+      paint: (d, sz, p) => P.pSudokuCover(d, sz, p, o.title || 'Sudoku',
+        `${ctx.puzzles.length} puzzles, ${gradeLine(o)}. One solution each.`),
+    }],
+  },
+  {
     id: 'sudoku',
     name: 'Sudoku',
-    blurb: 'Two graded puzzles a page, each with a unique solution.',
+    blurb: 'Graded puzzles, two a page. Every one has a single solution.',
     repeat: true,
-    pages: (s, n, st) => {
+    pages: (s, o, st, ctx) => {
       const out = [];
-      const pool = P.puzzlePool();
-      for (let i = 0; i < (n || 1); i += 1) {
+      const per = o.oneUp ? 1 : s.sudoku_per_page;
+      for (let i = 0; i < (o.n || 1); i += 1) {
         const start = st.puzzle;
-        const set = [];
-        for (let k = 0; k < s.sudoku_per_page; k += 1) {
-          set.push(pool[st.puzzle % pool.length]);
-          st.puzzle += 1;
-        }
-        st.used.push(...set.map((pz, k) => [start + k + 1, pz]));
+        const set = ctx.puzzles.slice(start, start + per);
+        st.puzzle += set.length;
         out.push({
-          label: `Sudoku ${start + 1}–${start + set.length}`,
-          paint: (d, sz, p) => P.pSudoku(d, sz, p, set, start + 1),
+          label: set.length > 1
+            ? `Sudoku ${start + 1}–${start + set.length}`
+            : `Sudoku ${start + 1}`,
+          paint: (d, sz, p) => P.pSudoku(d, sz, p, set, start + 1,
+            { working: o.working, date: o.date }),
         });
       }
       return out;
@@ -101,9 +116,9 @@ export const CATALOGUE = [
   {
     id: 'answers',
     name: 'Sudoku answers',
-    blurb: 'The solutions to every puzzle in this booklet, four to a page.',
-    pages: (s, n, st) => {
-      const all = st.all.slice();
+    blurb: 'Solutions to every puzzle in this booklet, eight to a page.',
+    pages: (s, o, st, ctx) => {
+      const all = ctx.puzzles;
       if (!all.length) {
         return [{ label: 'Sudoku answers (no puzzles yet)',
           paint: (d, sz, p) => P.pSudokuAnswers(d, sz, p, [], 1) }];
@@ -113,10 +128,8 @@ export const CATALOGUE = [
       for (let i = 0; i < all.length; i += per) {
         const chunk = all.slice(i, i + per);
         out.push({
-          label: `Sudoku answers ${chunk[0][0]}–`
-            + `${chunk[chunk.length - 1][0]}`,
-          paint: (d, sz, p) => P.pSudokuAnswers(d, sz, p,
-            chunk.map((c) => c[1]), chunk[0][0]),
+          label: `Sudoku answers ${i + 1}–${i + chunk.length}`,
+          paint: (d, sz, p) => P.pSudokuAnswers(d, sz, p, chunk, i + 1),
         });
       }
       return out;
@@ -127,7 +140,7 @@ export const CATALOGUE = [
     name: 'Ruled notes',
     blurb: 'Plain ruled lines.',
     repeat: true,
-    pages: (s, n) => Array.from({ length: n || 1 }, () => ({
+    pages: (s, o) => Array.from({ length: o.n || 1 }, () => ({
       label: 'Notes', paint: (d, sz, p) => P.pNotes(d, sz, p),
     })),
   },
@@ -136,7 +149,7 @@ export const CATALOGUE = [
     name: 'Dot grid',
     blurb: '5 mm dots, for anything that is not writing.',
     repeat: true,
-    pages: (s, n) => Array.from({ length: n || 1 }, () => ({
+    pages: (s, o) => Array.from({ length: o.n || 1 }, () => ({
       label: 'Dot grid', paint: (d, sz, p) => P.pDots(d, sz, p),
     })),
   },
@@ -145,7 +158,7 @@ export const CATALOGUE = [
     name: 'Blank',
     blurb: 'Nothing at all.',
     repeat: true,
-    pages: (s, n) => Array.from({ length: n || 1 }, () => ({
+    pages: (s, o) => Array.from({ length: o.n || 1 }, () => ({
       label: 'Blank', paint: () => {},
     })),
   },
@@ -154,7 +167,7 @@ export const CATALOGUE = [
     name: 'Printing and folding guide',
     blurb: 'How to print, cut, fold and nest this exact booklet. Always '
       + 'placed last.',
-    last: true,
+    fit: { atEnd: true },
     pages: (s) => (s.w > 100
       ? [{ label: 'Printing guide', guide: 1 }]
       : [{ label: 'Printing guide' , guide: 1 },
@@ -166,51 +179,57 @@ export const byId = (id) => CATALOGUE.find((c) => c.id === id);
 
 // ---------------------------------------------------------------- expansion
 
-export function expand(sizeKey, items) {
+export function gradeLine(o) {
+  const g = (o && o.grades && o.grades.length) ? o.grades : PUZZLE_GRADES;
+  return g.length === PUZZLE_GRADES.length
+    ? 'easy to very hard'
+    : g.join(', ').toLowerCase();
+}
+
+function fitOf(def, s) {
+  const f = typeof def.fit === 'function' ? def.fit(s) : (def.fit || {});
+  return fit(f);
+}
+
+// Every puzzle in the booklet, worked out before anything is placed, so the
+// answers page is complete wherever the user drops it.
+function puzzlesFor(sizeKey, items) {
   const s = SIZES[sizeKey];
-  // the answers page lists every puzzle in the booklet, so the full set is
-  // worked out up front rather than only what has been placed so far
-  const pool = P.puzzlePool();
-  const all = [];
-  let seen = 0;
+  let n = 0;
+  let grades = null;
   for (const it of items) {
     if (it.type !== 'sudoku') continue;
-    for (let i = 0; i < (it.n || 1) * s.sudoku_per_page; i += 1) {
-      all.push([seen + 1, pool[seen % pool.length]]);
-      seen += 1;
-    }
+    const o = it.opt || {};
+    n += (o.n || 1) * (o.oneUp ? 1 : s.sudoku_per_page);
+    if (o.grades && o.grades.length) grades = o.grades;
   }
-  const st = { puzzle: 0, habitsSeen: 0, used: [], all };
-  const body = [];
-  const tail = [];
-  const notes = [];
+  return P.pickPuzzles(n, grades);
+}
 
-  items.forEach((it, owner) => {
+export function expand(sizeKey, items, fill = 'blank') {
+  const s = SIZES[sizeKey];
+  const ctx = { puzzles: puzzlesFor(sizeKey, items) };
+  const st = { puzzle: 0, habitsSeen: 0 };
+
+  // every insert's pages, in the order the user put them
+  const made = items.map((it, owner) => {
     const def = byId(it.type);
-    if (!def) return;
-    const got = def.pages(s, it.n || 1, st).map((pg) => ({ ...pg, owner }));
-    if (def.last) {
-      tail.push(...got);
-      return;
-    }
-    if (def.spread && body.length % 2 === 0) {
-      // a spread has to open on a left-hand page, so the two halves face
-      body.push({ label: 'Blank (to face the spread)', paint: () => {},
-        auto: true, owner: null });
-    }
-    body.push(...got);
-  });
+    if (!def) return null;
+    const o = { ...(it.opt || {}), n: it.n || 1 };
+    const got = def.pages(s, o, st, ctx).map((pg) => ({ ...pg, owner }));
+    return { key: String(owner), pages: got.length, fit: fitOf(def, s), got };
+  }).filter(Boolean);
 
-  let total = body.length + tail.length;
-  if (total < 4) total = 4;
-  if (total % 4) total += 4 - (total % 4);
-  const padding = total - body.length - tail.length;
-  for (let i = 0; i < padding; i += 1) {
-    notes.push({ label: 'Blank (to fill the sheet)', paint: () => {},
-      auto: true, owner: null });
-  }
+  const byKey = new Map(made.map((m) => [m.key, m.got]));
+  const slots = plan(made.map(({ key, pages, fit: f }) => ({ key, pages,
+    fit: f })));
 
-  const out = [...body, ...notes, ...tail];
+  const filler = FILLERS[fill] || FILLERS.blank;
+  const out = slots.map((slot) => (slot.kind === 'fill'
+    ? { label: filler.label, why: slot.why, auto: true, owner: null,
+      paint: filler.paint }
+    : { ...byKey.get(slot.key)[slot.i], i: slot.i }));
+
   // the guide quotes the final page count, so it is bound last of all
   for (const pg of out) {
     if (pg.guide) {
@@ -220,6 +239,16 @@ export function expand(sizeKey, items) {
   }
   return out;
 }
+
+export const FILLERS = {
+  blank: { label: 'Spare page', paint: () => {} },
+  notes: { label: 'Spare page — ruled',
+    paint: (d, s, p) => P.pNotes(d, s, p) },
+  dots: { label: 'Spare page — dot grid',
+    paint: (d, s, p) => P.pDots(d, s, p) },
+};
+
+export { summary };
 
 // ---------------------------------------------------------------- painting
 
@@ -259,7 +288,7 @@ export function readingPdf(sizeKey, pages) {
 
 // ---------------------------------------------------------------- imposition
 
-export function plan(sizeKey, n) {
+export function a4Plan(sizeKey, n) {
   const g = A4[sizeKey];
   const sides = P.imposition(n);
   const folded = n / 4;
@@ -336,7 +365,7 @@ export function imposedPdf(sizeKey, pages) {
   const g = A4[sizeKey];
   const n = pages.length;
   const pdf = new Pdf(`Year Book A4 - ${sizeKey}`);
-  const sides = plan(sizeKey, n);
+  const sides = a4Plan(sizeKey, n);
   sides.forEach((slots, i) => {
     const sheet = pdf.page(g.aw, g.ah);
     for (const [pno, x, y] of slots) {

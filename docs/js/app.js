@@ -3,18 +3,46 @@
 
 import {
   CATALOGUE, SIZES, byId, expand, readingPdf, imposedPdf, previewPage,
+  summary,
 } from './booklet.js';
+import { PUZZLE_GRADES, poolSize } from './pages.js';
 
-const PRESET = [
-  'cover', 'glance', 'habits', 'habits', 'films', 'timezone',
-  'sudoku', 'sudoku', 'answers', 'guide',
-];
+const PRESETS = {
+  year: {
+    name: 'year-book',
+    items: ['cover', 'glance', 'habits', 'habits', 'films', 'timezone',
+      'sudoku', 'sudoku', 'answers', 'guide'].map((t) => ({ type: t })),
+    fill: 'notes',
+  },
+  sudoku: {
+    name: 'sudoku',
+    items: [
+      { type: 'sudoku-cover' },
+      ...Array.from({ length: 12 }, () => ({ type: 'sudoku' })),
+      { type: 'answers' },
+      { type: 'guide' },
+    ],
+    fill: 'notes',
+  },
+  pocket: {
+    name: 'pocket-kit',
+    items: [{ type: 'cover' }, { type: 'timezone' },
+      { type: 'sudoku' }, { type: 'sudoku' }, { type: 'answers' },
+      { type: 'notes' }, { type: 'dots' }, { type: 'guide' }],
+    fill: 'blank',
+  },
+};
 
 const state = {
   size: 'regular',
   items: [],
   sel: 0,
   pages: [],
+  fill: 'notes',
+  name: 'year-book',
+  // one set of puzzle settings for the whole booklet, not per page
+  sudoku: { grades: [...PUZZLE_GRADES], oneUp: false, working: false,
+    date: false, title: '' },
 };
 
 const $ = (id) => document.getElementById(id);
@@ -179,13 +207,30 @@ function save(blob, name) {
 
 function stamp() {
   const n = state.pages.length;
-  return `${state.size}-${n}pp`;
+  return `${state.name}-${state.size}-${n}pp`;
 }
 
 // ---------------------------------------------------------------- render
 
 function render() {
-  state.pages = expand(state.size, state.items);
+  const opt = state.sudoku;
+  for (const it of state.items) {
+    if (it.type === 'sudoku' || it.type === 'sudoku-cover') it.opt = opt;
+  }
+  state.pages = expand(state.size, state.items, state.fill);
+  $('sudopts').hidden = !state.items.some(
+    (i) => i.type === 'sudoku' || i.type === 'sudoku-cover');
+
+  // the pool is finite; say so rather than quietly repeating puzzles
+  const per = state.sudoku.oneUp ? 1 : SIZES[state.size].sudoku_per_page;
+  const asked = state.items.filter((i) => i.type === 'sudoku').length * per;
+  const have = poolSize(state.sudoku.grades);
+  $('sud-warn').hidden = asked <= have;
+  $('sud-warn').textContent = asked > have
+    ? `${asked} puzzles asked for but only ${have} in the chosen `
+      + `grade${state.sudoku.grades.length === 1 ? '' : 's'}, so some repeat.`
+      + ' Add another grade, or use fewer pages.'
+    : '';
   drawSizes();
   drawList();
   drawPreview();
@@ -194,7 +239,14 @@ function render() {
   const autos = state.pages.filter((p) => p.auto).length;
   $('count').textContent = state.items.length
     ? `${n} pages, ${n / 4} folded sheet${n === 4 ? '' : 's'}`
-      + (autos ? ` — ${autos} blank${autos === 1 ? '' : 's'} added` : '')
+      + (autos ? ` — ${autos} spare page${autos === 1 ? '' : 's'}` : '')
+    : '';
+
+  const why = summary(state.pages.map((p) => (p.auto
+    ? { kind: 'fill', why: p.why } : { kind: 'page' })));
+  $('why').innerHTML = why.size
+    ? `<b>Spare pages</b><ul>${[...why].map(([t, k]) =>
+      `<li>${k} × ${t}</li>`).join('')}</ul>`
     : '';
   $('dl-print').disabled = !state.items.length;
   $('dl-read').disabled = !state.items.length;
@@ -211,12 +263,55 @@ function render() {
 
 drawCatalogue();
 
-$('preset').onclick = () => {
-  state.items = PRESET.map((t) => ({ type: t, n: 1 }));
+for (const b of document.querySelectorAll('[data-preset]')) {
+  b.onclick = () => {
+    const p = PRESETS[b.dataset.preset];
+    state.items = p.items.map((i) => ({ ...i, n: 1, opt: {} }));
+    state.fill = p.fill;
+    state.name = p.name;
+    state.sel = 0;
+
+    for (const r of document.querySelectorAll('input[name=fill]')) {
+      r.checked = r.value === p.fill;
+    }
+    render();
+  };
+}
+$('clear').onclick = () => {
+  state.items = [];
   state.sel = 0;
+
   render();
 };
-$('clear').onclick = () => { state.items = []; state.sel = 0; render(); };
+for (const r of document.querySelectorAll('input[name=fill]')) {
+  r.onchange = () => { state.fill = r.value; render(); };
+}
+
+// puzzle settings
+const gbox = $('sud-grades');
+PUZZLE_GRADES.forEach((g) => {
+  const lab = document.createElement('label');
+  const cb = document.createElement('input');
+  cb.type = 'checkbox';
+  cb.checked = true;
+  cb.onchange = () => {
+    const on = PUZZLE_GRADES.filter((_, k) =>
+      gbox.querySelectorAll('input')[k].checked);
+    if (!on.length) { cb.checked = true; return; }   // at least one grade
+    state.sudoku.grades = on;
+    render();
+  };
+  lab.append(cb, document.createTextNode(` ${g}`));
+  gbox.appendChild(lab);
+});
+for (const [id, key] of [['sud-oneup', 'oneUp'], ['sud-working', 'working'],
+  ['sud-date', 'date']]) {
+  $(id).onchange = () => { state.sudoku[key] = $(id).checked; render(); };
+}
+$('sud-title').oninput = () => {
+  state.sudoku.title = $('sud-title').value.trim();
+  render();
+};
 $('prev').onclick = () => {
   state.sel = Math.max(0, state.sel - 1);
   render();
@@ -226,14 +321,12 @@ $('next').onclick = () => {
   render();
 };
 $('dl-print').onclick = () => {
-  save(imposedPdf(state.size, state.pages).blob(),
-    `year-book-${stamp()}-A4.pdf`);
+  save(imposedPdf(state.size, state.pages).blob(), `${stamp()}-A4.pdf`);
 };
 $('dl-read').onclick = () => {
-  save(readingPdf(state.size, state.pages).blob(),
-    `year-book-${stamp()}.pdf`);
+  save(readingPdf(state.size, state.pages).blob(), `${stamp()}.pdf`);
 };
 
 window.addEventListener('resize', () => drawPreview());
 
-$('preset').click();
+document.querySelector('[data-preset="year"]').click();

@@ -10,6 +10,7 @@ chart spread, sudoku with its answers, notes and the printing guide.
 import os
 
 from build_core import SIZES, MONTHS, INK, doc, sheet, year_grid, padw, padh
+from layout import Fit, plan, summary
 import build_extras
 
 OUT = "."
@@ -217,10 +218,10 @@ def _a4_diagram(s, size, n):
             % (4 if land else 6, "".join(out)))
 
 
-def p_print_guide(s, size, n=8):
+def p_print_guide(s, size, n=8, stem="year-book"):
     """The last page(s): how to print, cut, fold and nest."""
     land = size == "regular"
-    f = "year-book-%s-A4.pdf" % size
+    f = "%s-%s-A4.pdf" % (stem, size)
     folded, a4 = sheets(size, n)
     papers = a4 // 2
     say = lambda k, one, many: (one if k == 1 else many % k)
@@ -305,47 +306,79 @@ def p_print_guide(s, size, n=8):
 
 # ---------------------------------------------------------------- assembly
 
+def inserts(size):
+    """The booklet's content, as (key, renderer, pages, Fit).
+
+    `renderer` is called with the index of the page within the insert and the
+    booklet's final page count, and returns (html, turned). Nothing here
+    decides where the blanks go - layout.plan does, from the Fit each insert
+    declares.
+    """
+    s = SIZES[size]
+    per = s["habits_per_page"]
+    big = size == "regular"
+    out = []
+
+    out.append(("cover", lambda i, n: (p_cover(s), False), 1,
+                Fit(start="recto")))
+    out.append(("year at a glance", lambda i, n: (p_glance(s), True), 1, Fit()))
+
+    chunks = []
+    left = HABITS
+    while left > 0:
+        chunks.append(min(per, left))
+        left -= chunks[-1]
+    out.append(("habit grids",
+                lambda i, n, c=chunks: (p_habits(s, c[i], i == 0), False),
+                len(chunks), Fit()))
+
+    if big:
+        out.append(("films and shows",
+                    lambda i, n: (p_films(s, MONTHS, 1, 1), True), 1, Fit()))
+    else:
+        # two halves of the year, kept facing so the whole year is in view
+        out.append(("films and shows",
+                    lambda i, n: (p_films(s, MONTHS[6 * i:6 * i + 6],
+                                          i + 1, 2), True),
+                    2, Fit(spread=True)))
+
+    tz = [build_extras.p_timezone_map, build_extras.p_timezone_table]
+    out.append(("world time chart",
+                lambda i, n: (tz[i](s), False), 2, Fit(spread=True)))
+
+    puz = build_extras.sudoku_set(SUDOKUS)
+    npz = s["sudoku_per_page"]
+    out.append(("sudoku",
+                lambda i, n: (build_extras.p_sudoku(
+                    s, puz[i * npz:(i + 1) * npz], i * npz + 1), False),
+                (SUDOKUS + npz - 1) // npz, Fit()))
+    out.append(("sudoku answers",
+                lambda i, n: (build_extras.p_sudoku_solutions(s, puz, 1),
+                              False), 1, Fit()))
+
+    out.append(("printing guide",
+                lambda i, n: (p_print_guide(s, size, n)[i], False),
+                1 if big else 2, Fit(at_end=True)))
+    return out
+
+
 def pages(size):
     """The booklet's page bodies, in reading order, as (html, turned)."""
     s = SIZES[size]
-    per = s["habits_per_page"]
-    out = [(p_cover(s), False), (p_glance(s), True)]
+    items = inserts(size)
+    render = {k: fn for k, fn, _, _ in items}
+    slots = plan([(k, n, fit) for k, _, n, fit in items])
+    total = len(slots)
+    # spare pages in this booklet are ruled notes - more use than an empty
+    # page, and the layout engine does not care what fills them
+    return [(p_notes(s), False) if kind == "fill" else render[key](i, total)
+            for kind, key, i in slots]
 
-    left, first = HABITS, True
-    while left > 0:
-        n = min(per, left)
-        out.append((p_habits(s, n, first), False))
-        left -= n
-        first = False
 
-    if size == "regular":
-        out.append((p_films(s, MONTHS, 1, 1), True))
-    else:
-        out.append((p_films(s, MONTHS[:6], 1, 2), True))
-        out.append((p_films(s, MONTHS[6:], 2, 2), True))
-
-    # the time chart is a spread: the map must fall on a left-hand (even) page
-    # so the table sits opposite it with the book open. len(out) pages are
-    # placed, so the map would be page len(out) + 1.
-    if len(out) % 2 == 0:
-        out.append((p_blank(s), False))
-    out.append((build_extras.p_timezone_map(s), False))
-    out.append((build_extras.p_timezone_table(s), False))
-
-    puz = build_extras.sudoku_set(SUDOKUS)
-    for i in range(0, SUDOKUS, s["sudoku_per_page"]):
-        chunk = puz[i:i + s["sudoku_per_page"]]
-        out.append((build_extras.p_sudoku(s, chunk, i + 1), False))
-    out.append((build_extras.p_sudoku_solutions(s, puz, 1), False))
-
-    # the guide's own length is fixed per size, so the total is known before
-    # the guide is rendered - which it has to be, because it quotes the total
-    gn = 1 if size == "regular" else 2
-    total = len(out) + gn
-    while total < 8 or total % 4:
-        total += 1
-    out += [(p_notes(s), False)] * (total - gn - len(out))
-    return out + [(g, False) for g in p_print_guide(s, size, total)]
+def spare(size):
+    """Why each spare page in this booklet is there."""
+    items = inserts(size)
+    return summary(plan([(k, n, fit) for k, _, n, fit in items]))
 
 
 def build(size):

@@ -273,3 +273,92 @@ button.link {
 
 footer { padding: 26px 20px 46px; color: var(--soft); font-size: 13px; }
 footer a { color: inherit; }
+
+/* ----------------------------------------------------------- spare pages */
+
+.why {
+  margin: 12px 0 0;
+  font-size: 13px;
+  color: var(--soft);
+}
+
+.why b {
+  color: var(--ink);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.why ul { margin: 5px 0 0; padding-left: 18px; }
+.why li { margin-bottom: 2px; }
+
+.fillpick {
+  margin-top: 14px;
+  font-size: 13px;
+  color: var(--soft);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 12px;
+  align-items: center;
+}
+
+.fillpick label { display: inline-flex; gap: 4px; align-items: center; }
+
+/* ----------------------------------------------------------- options */
+
+.panel {
+  margin-top: 14px;
+  padding: 11px 13px;
+  border: 1px solid var(--rule);
+  border-radius: 8px;
+  background: #f4f2ec;
+}
+
+.panel > b {
+  display: block;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 7px;
+}
+
+.panel input[type="text"] {
+  font: inherit;
+  font-size: 13px;
+  padding: 2px 7px;
+  border: 1px solid var(--rule);
+  border-radius: 5px;
+  background: #fff;
+  width: 170px;
+}
+
+.orow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 12px;
+  align-items: center;
+  font-size: 13px;
+  color: var(--soft);
+  margin-bottom: 5px;
+}
+
+.orow:last-child { margin-bottom: 0; }
+
+.orow > span {
+  width: 52px;
+  flex: none;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--ink);
+}
+
+.orow label { display: inline-flex; gap: 4px; align-items: center; }
+
+.warn {
+  margin: 8px 0 0;
+  font-size: 13px;
+  color: var(--ink);
+  border-left: 2px solid var(--ink);
+  padding-left: 9px;
+}

@@ -18,10 +18,10 @@ CANDIDATES = [
 ]
 
 JOBS = [
-    "regular/year-book-regular",
-    "regular/year-book-regular-A4",
-    "passport/year-book-passport",
-    "passport/year-book-passport-A4",
+    "%s/%s-%s%s" % (size, stem, size, a4)
+    for stem in ("year-book", "sudoku")
+    for size in ("regular", "passport")
+    for a4 in ("", "-A4")
 ]
 
 

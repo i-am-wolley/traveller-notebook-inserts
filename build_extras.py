@@ -80,31 +80,62 @@ def _clue_overlay(puz, side):
     return "".join(out)
 
 
-def p_sudoku(s, puzzles, start_no):
-    """Two puzzles to a page, each with its grade and a line for the time.
+def p_sudoku(s, puzzles, start_no, notes=False, date=False):
+    """Puzzles to a page, each with its grade and a line for the time.
 
     The grid is as large as the page allows and centred, with its heading
-    ranged to the same width so the block reads as one piece.
+    ranged to the same width so the block reads as one piece. `notes` adds
+    ruled lines under each grid for working out; `date` adds a dated line.
     """
     n_up = len(puzzles)
     hdr = s["h3"] * 0.353 + 1.6
-    side = min(padw(s), (padh(s) - n_up * hdr - 6) / float(n_up))
-    gap = max(0.6, (padh(s) - n_up * (side + hdr) - 3) / float(n_up * 2))
+    foot = 0.0
+    if notes:
+        foot = (3 if s["w"] > 100 else 2) * (4.6 if s["w"] > 100 else 3.8) + 2
+    side = min(padw(s), (padh(s) - n_up * (hdr + foot) - 6) / float(n_up))
+    gap = max(0.6, (padh(s) - n_up * (side + hdr + foot) - 3)
+              / float(n_up * 2))
+
     blocks = []
     for n, p in enumerate(puzzles, start=start_no):
+        right = ("date" if date else "time")
         blocks.append(
             "<div style='width:%.2fmm;margin:%.2fmm auto'>"
             "<div style='display:flex;justify-content:space-between;"
             "align-items:baseline;margin-bottom:1.2mm;font-size:%spt'>"
             "<span style='font-weight:700;text-transform:uppercase;"
             "letter-spacing:.07em'>%d &middot; %s</span>"
-            "<span class='sub'>time <span class='nameline' "
+            "<span class='sub'>%s <span class='nameline' "
             "style='width:%.1fmm'>&nbsp;</span></span></div>"
-            "<div style='position:relative;width:%.2fmm'>%s%s</div></div>"
-            % (side, gap, s["h3"], n, p["name"], side * 0.26,
+            "<div style='position:relative;width:%.2fmm'>%s%s</div>%s</div>"
+            % (side, gap, s["h3"], n, p["name"], right, side * 0.26,
                side, _sudoku_grid(side, side / 9.0 * 2.1),
-               _clue_overlay(p["puzzle"], side)))
+               _clue_overlay(p["puzzle"], side),
+               _work_lines(s, side) if notes else ""))
     return "<div>%s</div>" % "".join(blocks)
+
+
+def _work_lines(s, w):
+    """A couple of ruled lines under a puzzle, for pencil working."""
+    gap = 4.6 if s["w"] > 100 else 3.8
+    n = 3 if s["w"] > 100 else 2
+    return ("<div style='margin-top:1.6mm'>%s</div>"
+            % "".join("<div style='border-bottom:0.3pt solid #d8d8d8;"
+                      "height:%.1fmm'></div>" % gap for _ in range(n)))
+
+
+def p_sudoku_cover(s, title, subtitle):
+    """A cover for a booklet that is only puzzles."""
+    cell = padw(s) / 11.0
+    demo = ("<div style='width:%.2fmm;margin:0 auto'>%s</div>"
+            % (cell * 9, _sudoku_grid(cell * 9, cell * 2.1)))
+    return ("<div class='cover'><div style='height:11%%'></div>"
+            "<h1>%s</h1><div class='rule'></div>"
+            "<p class='sub'>%s</p>"
+            "<div class='mid' style='display:flex;align-items:center'>%s</div>"
+            "<div class='sub'>Started</div>"
+            "<div class='wbox' style='height:%smm'></div></div>"
+            % (title, subtitle, demo, s["h2"] * 1.5))
 
 
 def p_sudoku_solutions(s, puzzles, start_no):

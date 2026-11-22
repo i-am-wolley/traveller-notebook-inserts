@@ -104,9 +104,9 @@ def marks(size, side_no, folded):
     return "".join(out)
 
 
-def build(size):
+def build(size, bodies=None, title=None):
     s = SIZES[size]
-    bodies = pages(size)
+    bodies = pages(size) if bodies is None else bodies
     aw, ah, orient, sides = plan(size, len(bodies))
     folded = len(bodies) // 4
 
@@ -136,20 +136,30 @@ body { background: #fff; }
                    % ("".join(slots), marks(size, i, folded)))
 
     return ("<!doctype html><html><head><meta charset='utf-8'>"
-            "<title>Year Book A4 &mdash; %s</title><style>%s%s</style></head>"
+            "<title>%s</title><style>%s%s</style></head>"
             "<body>\n%s\n</body></html>\n"
-            % (size, css(s), extra, "".join(out)))
+            % (title or ("Year Book A4 &mdash; %s" % size),
+               css(s), extra, "".join(out)))
+
+
+def jobs():
+    """Every booklet that gets imposed: (stem, title, pages provider)."""
+    import build_sudoku
+    return [("year-book", "Year Book A4", pages),
+            ("sudoku", "Sudoku A4", build_sudoku.pages)]
 
 
 def main():
-    for size in ("regular", "passport"):
-        d = os.path.join(OUT, size)
-        os.makedirs(d, exist_ok=True)
-        path = os.path.join(d, "year-book-%s-A4.html" % size)
-        html = build(size)
-        with open(path, "w", encoding="utf-8") as f:
-            f.write(html)
-        print("%-44s %d A4 sides" % (path, html.count("class='a4'")))
+    for stem, title, provider in jobs():
+        for size in ("regular", "passport"):
+            d = os.path.join(OUT, size)
+            os.makedirs(d, exist_ok=True)
+            path = os.path.join(d, "%s-%s-A4.html" % (stem, size))
+            html = build(size, provider(size),
+                         "%s &mdash; %s" % (title, size))
+            with open(path, "w", encoding="utf-8") as f:
+                f.write(html)
+            print("%-44s %d A4 sides" % (path, html.count("class='a4'")))
 
 
 if __name__ == "__main__":

@@ -120,10 +120,10 @@
   "turned": false
  },
  {
-  "name": "passport-5-films",
+  "name": "passport-5-notes",
   "size": "passport",
-  "kind": "films",
-  "turned": true
+  "kind": "notes",
+  "turned": false
  },
  {
   "name": "passport-6-films",
@@ -132,10 +132,10 @@
   "turned": true
  },
  {
-  "name": "passport-7-blank",
+  "name": "passport-7-films",
   "size": "passport",
-  "kind": "blank",
-  "turned": false
+  "kind": "films",
+  "turned": true
  },
  {
   "name": "passport-8-timezone",

@@ -33,7 +33,9 @@ print-exact imposed PDF for a saddle-stitched Traveller's Notebook booklet.">
       notes and sudoku can be added as many times as you like.</p>
     <div class="catalogue" id="catalogue"></div>
     <p class="hint">Or start from a ready-made booklet:
-      <button class="link" id="preset">the full Year Book</button> ·
+      <button class="link" data-preset="year">the full Year Book</button> ·
+      <button class="link" data-preset="sudoku">a sudoku book</button> ·
+      <button class="link" data-preset="pocket">a pocket kit</button> ·
       <button class="link" id="clear">clear everything</button></p>
   </section>
 
@@ -43,6 +45,33 @@ print-exact imposed PDF for a saddle-stitched Traveller's Notebook booklet.">
       <div>
         <div class="count" id="count"></div>
         <ol class="booklet" id="booklet"></ol>
+        <div class="panel" id="sudopts" hidden>
+          <b>Puzzles</b>
+          <div class="orow"><span>Grades</span><span id="sud-grades"></span>
+          </div>
+          <div class="orow"><span>Page</span>
+            <label><input type="checkbox" id="sud-oneup">
+              one big grid a page</label>
+            <label><input type="checkbox" id="sud-working">
+              ruled working lines</label>
+            <label><input type="checkbox" id="sud-date">
+              date instead of time</label>
+          </div>
+          <div class="orow"><span>Title</span>
+            <input type="text" id="sud-title" placeholder="Sudoku"
+              maxlength="28"></div>
+          <p class="warn" id="sud-warn" hidden></p>
+        </div>
+        <div class="why" id="why"></div>
+        <div class="fillpick">
+          <span>Spare pages are</span>
+          <label><input type="radio" name="fill" value="blank" checked>
+            blank</label>
+          <label><input type="radio" name="fill" value="notes">
+            ruled</label>
+          <label><input type="radio" name="fill" value="dots">
+            dot grid</label>
+        </div>
       </div>
       <div class="previewbox">
         <div class="pvhead">
@@ -77,9 +106,12 @@ print-exact imposed PDF for a saddle-stitched Traveller's Notebook booklet.">
       <li>Trim the dashed cut lines, fold down the dashed centre, nest the
         sheets in order, and staple through the fold.</li>
     </ol>
-    <p class="hint">Blank pages are added automatically: one to keep a
-      two-page spread facing, and as many as it takes to reach a multiple of
-      four, which is what a folded booklet needs.</p>
+    <p class="hint">Spare pages appear on their own, and the list says why
+      each one is there: to keep a two-page spread facing, to start a section
+      on a right-hand page, or simply to reach a multiple of four, which is
+      what a folded booklet needs. Where they fall depends on the size — the
+      films chart is one page on regular and two on passport, so the two
+      sizes need different padding.</p>
   </section>
 
 </main>

@@ -81,6 +81,7 @@ export const CATALOGUE = [
   },
   {
     id: 'sudoku-cover',
+    solo: true,
     name: 'Sudoku cover',
     blurb: 'A title page for a booklet that is only puzzles.',
     fit: { start: 'recto' },
@@ -93,6 +94,7 @@ export const CATALOGUE = [
   },
   {
     id: 'sudoku',
+    solo: true,
     name: 'Sudoku',
     blurb: 'Graded puzzles, two a page. Every one has a single solution.',
     repeat: true,
@@ -115,6 +117,7 @@ export const CATALOGUE = [
   },
   {
     id: 'answers',
+    solo: true,
     name: 'Sudoku answers',
     blurb: 'Solutions to every puzzle in this booklet, eight to a page.',
     pages: (s, o, st, ctx) => {
@@ -176,6 +179,10 @@ export const CATALOGUE = [
 ];
 
 export const byId = (id) => CATALOGUE.find((c) => c.id === id);
+
+// what the general booklet builder offers; the puzzle inserts are the
+// sudoku page's own and do not appear there
+export const GENERAL = CATALOGUE.filter((c) => !c.solo);
 
 // ---------------------------------------------------------------- expansion
 

@@ -2,33 +2,21 @@
 // preview any page, and download either PDF.
 
 import {
-  CATALOGUE, SIZES, byId, expand, readingPdf, imposedPdf, previewPage,
+  GENERAL, SIZES, byId, expand, readingPdf, imposedPdf, previewPage,
   summary,
 } from './booklet.js';
-import { PUZZLE_GRADES, newSeed } from './pages.js';
 
 const PRESETS = {
   year: {
     name: 'year-book',
     items: ['cover', 'glance', 'habits', 'habits', 'films', 'timezone',
-      'sudoku', 'sudoku', 'answers', 'guide'].map((t) => ({ type: t })),
-    fill: 'notes',
-  },
-  sudoku: {
-    name: 'sudoku',
-    items: [
-      { type: 'sudoku-cover' },
-      ...Array.from({ length: 12 }, () => ({ type: 'sudoku' })),
-      { type: 'answers' },
-      { type: 'guide' },
-    ],
+      'guide'].map((t) => ({ type: t })),
     fill: 'notes',
   },
   pocket: {
     name: 'pocket-kit',
-    items: [{ type: 'cover' }, { type: 'timezone' },
-      { type: 'sudoku' }, { type: 'sudoku' }, { type: 'answers' },
-      { type: 'notes' }, { type: 'dots' }, { type: 'guide' }],
+    items: ['cover', 'timezone', 'notes', 'dots', 'guide']
+      .map((t) => ({ type: t })),
     fill: 'blank',
   },
 };
@@ -40,9 +28,6 @@ const state = {
   pages: [],
   fill: 'notes',
   name: 'year-book',
-  // one set of puzzle settings for the whole booklet, not per page
-  sudoku: { grades: [...PUZZLE_GRADES], oneUp: false, working: false,
-    date: false, title: '', seed: newSeed() },
 };
 
 const $ = (id) => document.getElementById(id);
@@ -76,7 +61,7 @@ function drawSizes() {
 function drawCatalogue() {
   const box = $('catalogue');
   box.innerHTML = '';
-  for (const def of CATALOGUE) {
+  for (const def of GENERAL) {
     const b = document.createElement('button');
     b.type = 'button';
     const tag = def.last ? 'always last'
@@ -213,13 +198,7 @@ function stamp() {
 // ---------------------------------------------------------------- render
 
 function render() {
-  const opt = state.sudoku;
-  for (const it of state.items) {
-    if (it.type === 'sudoku' || it.type === 'sudoku-cover') it.opt = opt;
-  }
   state.pages = expand(state.size, state.items, state.fill);
-  $('sudopts').hidden = !state.items.some(
-    (i) => i.type === 'sudoku' || i.type === 'sudoku-cover');
 
 
   drawSizes();
@@ -278,41 +257,6 @@ for (const r of document.querySelectorAll('input[name=fill]')) {
   r.onchange = () => { state.fill = r.value; render(); };
 }
 
-// puzzle settings
-const gbox = $('sud-grades');
-PUZZLE_GRADES.forEach((g) => {
-  const lab = document.createElement('label');
-  const cb = document.createElement('input');
-  cb.type = 'checkbox';
-  cb.checked = true;
-  cb.onchange = () => {
-    const on = PUZZLE_GRADES.filter((_, k) =>
-      gbox.querySelectorAll('input')[k].checked);
-    if (!on.length) { cb.checked = true; return; }   // at least one grade
-    state.sudoku.grades = on;
-    render();
-  };
-  lab.append(cb, document.createTextNode(` ${g}`));
-  gbox.appendChild(lab);
-});
-for (const [id, key] of [['sud-oneup', 'oneUp'], ['sud-working', 'working'],
-  ['sud-date', 'date']]) {
-  $(id).onchange = () => { state.sudoku[key] = $(id).checked; render(); };
-}
-$('sud-title').oninput = () => {
-  state.sudoku.title = $('sud-title').value.trim();
-  render();
-};
-$('sud-seed').value = state.sudoku.seed;
-$('sud-seed').oninput = () => {
-  state.sudoku.seed = $('sud-seed').value.trim() || 'year-book';
-  render();
-};
-$('sud-new').onclick = () => {
-  state.sudoku.seed = newSeed();
-  $('sud-seed').value = state.sudoku.seed;
-  render();
-};
 $('prev').onclick = () => {
   state.sel = Math.max(0, state.sel - 1);
   render();

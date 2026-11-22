@@ -3,7 +3,8 @@
 
 Page types: a cover, a year-at-a-glance heat grid (turned on its side), six
 blank-labelled habit grids, a films-and-shows stack chart, the world time
-chart spread, sudoku with its answers, notes and the printing guide.
+chart spread, notes and the printing guide. Puzzles are their own booklet -
+see build_sudoku.py.
 
     python build_inserts.py && python make_pdfs.py
 """
@@ -15,7 +16,6 @@ import build_extras
 
 OUT = "."
 HABITS = 6
-SUDOKUS = 8        # puzzles in the booklet, two to a page
 
 
 # ---------------------------------------------------------------- pages
@@ -345,16 +345,6 @@ def inserts(size):
     tz = [build_extras.p_timezone_map, build_extras.p_timezone_table]
     out.append(("world time chart",
                 lambda i, n: (tz[i](s), False), 2, Fit(spread=True)))
-
-    puz = build_extras.sudoku_set(SUDOKUS)
-    npz = s["sudoku_per_page"]
-    out.append(("sudoku",
-                lambda i, n: (build_extras.p_sudoku(
-                    s, puz[i * npz:(i + 1) * npz], i * npz + 1), False),
-                (SUDOKUS + npz - 1) // npz, Fit()))
-    out.append(("sudoku answers",
-                lambda i, n: (build_extras.p_sudoku_solutions(s, puz, 1),
-                              False), 1, Fit()))
 
     out.append(("printing guide",
                 lambda i, n: (p_print_guide(s, size, n)[i], False),

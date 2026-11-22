@@ -1,13 +1,13 @@
 # Year Book — Traveller's Notebook insert
 
 A year of life-tracking pages, sized for Regular (110 × 210 mm) and Passport
-(89 × 124 mm) Traveller's Notebooks. 16 pages each — four folded sheets.
+(89 × 124 mm) Traveller's Notebooks.
 
 **Or build your own.** Two tools, both running entirely in the browser:
 
 - [**Booklet builder**](https://i-am-wolley.github.io/traveller-notebook-inserts/)
   — pick a size, choose inserts, drag them into order, download the imposed
-  PDF.
+  PDF. Everything except puzzles.
 - [**Sudoku book**](https://i-am-wolley.github.io/traveller-notebook-inserts/sudoku/)
   — a booklet of nothing but puzzles, with its own controls: difficulty mix,
   how many, one or two to a page, numbering, typeface, cover, working lines,
@@ -17,19 +17,20 @@ A year of life-tracking pages, sized for Regular (110 × 210 mm) and Passport
 cut and fold marks. The plain files are reading copies at true insert size.
 
 ```
-regular/   year-book-regular-A4.pdf     8 sides, A4 landscape   ← print this
-           year-book-regular.pdf       16 pages, 110 × 210 mm
+regular/   year-book-regular-A4.pdf     4 sides, A4 landscape   ← print this
+           year-book-regular.pdf        8 pages, 110 × 210 mm
            sudoku-regular-A4.pdf       10 sides, A4 landscape   ← print this
            sudoku-regular.pdf          20 pages, 110 × 210 mm
 passport/  year-book-passport-A4.pdf    4 sides, A4 portrait    ← print this
-           year-book-passport.pdf      16 pages, 89 × 124 mm
+           year-book-passport.pdf      12 pages, 89 × 124 mm
            sudoku-passport-A4.pdf       6 sides, A4 portrait    ← print this
            sudoku-passport.pdf         20 pages, 89 × 124 mm
 ```
 
-There are two ready-made booklets: the **Year Book** below, and a **Sudoku
-book** — 24 graded puzzles with the answers at the back. Change what is in
-the sudoku book at the top of `build_sudoku.py`.
+Two separate booklets, on purpose: the **Year Book** is the tracking pages,
+and the **Sudoku book** is 24 graded puzzles with the answers at the back.
+Puzzles are not mixed into the Year Book — they are their own insert, built
+by `build_sudoku.py` and by the sudoku page of the site.
 
 The `.html` beside each PDF is the source. To change anything, edit
 `build_inserts.py` (page content) or `build_core.py` (geometry and CSS), then:
@@ -42,19 +43,17 @@ python make_pdfs.py         # renders all four PDFs with headless Chrome
 
 ## The pages
 
-Regular, 16 pages (passport in brackets where it differs):
+Regular is 8 pages, passport 12 (it needs two pages for the films chart, so
+the spare pages fall differently). Passport numbers in brackets:
 
 | | |
 |---|---|
 | 1 | Cover |
 | 2 | **Every day of the year** — 12 × 31 grid, turned sideways |
 | 3–4 | **The year in habits** — six blank-labelled 12 × 31 grids, three per page |
-| 5 | **Films and shows** — months across the bottom, titles stacked up (passport: 5–6, six months each; 7 blank) |
+| 5 | **Films and shows** — months across the bottom, titles stacked up (passport: 6–7, six months each, facing) |
 | 6–7 | **World time chart** — zone map and every standard offset, then the conversion table (passport: 8–9) |
-| 8–11 | **Sudoku** — eight graded puzzles, two per page (passport: 10–13) |
-| 12 | **Sudoku answers** (passport: 14) |
-| 13–15 | Notes (passport: none) |
-| 16 | **Printing and folding** — the whole procedure, on the page (passport: 15–16) |
+| 8 | **Printing and folding** — the whole procedure, on the page (passport: 10–11) |
 
 ### World time chart
 

@@ -34,13 +34,14 @@ print-exact imposed PDF for a saddle-stitched Traveller's Notebook booklet.">
   <section class="step">
     <h2><span class="n">2</span> Inserts</h2>
     <p class="hint">Click to add a page to the end of your booklet. Grids,
-      notes and sudoku can be added as many times as you like.</p>
+      notes and dot grids can be added as many times as you like.</p>
     <div class="catalogue" id="catalogue"></div>
     <p class="hint">Or start from a ready-made booklet:
       <button class="link" data-preset="year">the full Year Book</button> ·
-      <button class="link" data-preset="sudoku">a sudoku book</button> ·
       <button class="link" data-preset="pocket">a pocket kit</button> ·
       <button class="link" id="clear">clear everything</button></p>
+    <p class="hint">Puzzles live on their own:
+      <a href="sudoku/">the sudoku book generator →</a></p>
   </section>
 
   <section class="step">
@@ -49,29 +50,6 @@ print-exact imposed PDF for a saddle-stitched Traveller's Notebook booklet.">
       <div>
         <div class="count" id="count"></div>
         <ol class="booklet" id="booklet"></ol>
-        <div class="panel" id="sudopts" hidden>
-          <b>Puzzles</b>
-          <div class="orow"><span>Grades</span><span id="sud-grades"></span>
-          </div>
-          <div class="orow"><span>Page</span>
-            <label><input type="checkbox" id="sud-oneup">
-              one big grid a page</label>
-            <label><input type="checkbox" id="sud-working">
-              ruled working lines</label>
-            <label><input type="checkbox" id="sud-date">
-              date instead of time</label>
-          </div>
-          <div class="orow"><span>Title</span>
-            <input type="text" id="sud-title" placeholder="Sudoku"
-              maxlength="28"></div>
-          <div class="orow"><span>Seed</span>
-            <input type="text" id="sud-seed" maxlength="16">
-            <button class="link" id="sud-new">new puzzles</button></div>
-          <p class="hint" style="margin-top:7px">Puzzles are generated here,
-            in your browser. The same seed always gives the same set; a new
-            one gives a set nobody has seen.
-            <a href="sudoku/">More control on the sudoku page →</a></p>
-        </div>
         <div class="why" id="why"></div>
         <div class="fillpick">
           <span>Spare pages are</span>

@@ -1,10 +1,10 @@
 # Year Book — Traveller's Notebook insert
 
 Printable analog life-tracking inserts, generated from Python into print-exact
-HTML and rendered to PDF with headless Chrome. Two sizes, one booklet each,
-16 pages. There is also a browser booklet builder in `docs/`, served by GitHub
-Pages, which lets anyone compose their own booklet and download the imposed
-PDF. `README.md` is the user-facing doc; this file is the working context.
+HTML and rendered to PDF with headless Chrome. Two sizes; two booklets, the
+Year Book and a sudoku book. `docs/` is a browser version on GitHub Pages
+with the same two tools. `README.md` is the user-facing doc; this file is the
+working context.
 
 The design descends from a "I tracked my life every day for a year" infographic
 (`lm82acr2cy1i1.png`, kept for reference). The insert captures the *data*; the
@@ -82,9 +82,16 @@ Duplex flip edge varies by driver, so the guide page tells the owner to verify
 physically (back of page 1 must be page 2, same way up) rather than trusting a
 setting.
 
+**Puzzles are not part of the Year Book.** They were, briefly; the owner
+split them out. `build_inserts.py` has no sudoku, the booklet builder's
+catalogue hides the three puzzle inserts behind `solo: true`, and `GENERAL`
+is what that page offers. The sudoku page uses the full `CATALOGUE`.
+
+
 ## Decisions already made — don't re-add
 
 The owner pruned this hard. Previously built and **deliberately removed**:
+sudoku inside the Year Book (it is its own booklet now);
 a separate Daily Log booklet; a year-totals page; the good-day cross-tab
 worksheet; weekday, movement, dinner and travel pages; the year-end dashboard;
 people/social tracking; crying as a tracked field; the how-to page (and with it

@@ -54,6 +54,18 @@ Always run them in that order — `build_imposed` imports the other two, and
   top-left). Read by turning the notebook **clockwise**.
 - **Gutter.** Odd pages get class `R` (wide margin left), even pages `L` (wide
   margin right), so the spine margin always falls into the fold.
+- **The time chart reads from one base city.** `BASE` in `build_extras.py`
+  names it; its column is the left-hand one and every other time on the row
+  is derived from it, so the rows are the base city's whole hours, not UTC.
+  With Delhi at +5:30 every other column lands on a half hour - that is
+  correct, not a bug. `CITIES` and `BASE` are exported to `docs/js/` by
+  `make_webdata.py`, so rerun it after touching either.
+- **Map labels are hand-nudged.** The `dx`/`dy` in `CITIES` are millimetres
+  in map space and were set against the type size actually used; Los Angeles
+  and New York are only 11 mm apart on a regular page, so they sit on
+  opposite sides of their dots. Check both sizes after changing the label
+  size. Labels carry a white halo (`paint-order` in the SVG, a stroked pass
+  in the PDF writer).
 - **Greyscale only.** No colour anywhere; grid rules print light so pen reads on
   top. This beats the source material: the time-chart reference card
   (`world-time-chart-tn-passport (1).pdf`) uses a red accent, so here the UTC

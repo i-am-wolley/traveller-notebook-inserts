@@ -6,7 +6,7 @@
 // dead dates greyed, 29 February left open, greyscale throughout.
 
 import { INK, RULE, GREY, textWidth } from './surface.js';
-import { SIZES, A4, CITIES, SMALL_SET, ZONES, MONTHS, DAYS }
+import { SIZES, A4, CITIES, BASE, ZONES, MONTHS, DAYS }
   from './geometry.js';
 import { POLYS } from './mapdata.js';
 import * as SUD from './sudoku.js';
@@ -408,11 +408,9 @@ const clock = (utc, off) => {
   return `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}`;
 };
 
-function cityList(s) {
-  if (s.w > 100) return CITIES;
-  const keep = new Set(SMALL_SET);
-  return CITIES.filter((c) => keep.has(c[0]));
-}
+// the base city reads from the left-hand column; the rest run across
+const baseCity = () => CITIES.find((c) => c[0] === BASE) || CITIES[0];
+const cityList = () => CITIES.filter((c) => c[0] !== BASE);
 
 function worldMap(d, s, x, y, w) {
   const h = w / 2;
@@ -440,16 +438,20 @@ function worldMap(d, s, x, y, w) {
 
   // the dot radius and the label nudges in CITIES are millimetres, matching
   // the Python SVG whose user unit is a millimetre
-  const fs = (s.w > 100 ? 2.3 : 1.9) / PT;
-  const r = s.w > 100 ? 0.55 : 0.45;
-  for (const [name, , lon, lat, off, anchor, dx, dy] of cityList(s)) {
+  const mm = s.w > 100 ? 2.6 : 2.1;        // label height in millimetres
+  const fs = mm / PT;
+  for (const [name, , lon, lat, , anchor, dx, dy] of CITIES) {
     const cx = x + (lon + 180) * sx;
     const cy = y + (90 - lat) * sy;
-    d.dot(cx, cy, r, {
-      fill: Math.abs(off) < 0.01 ? '#ffffff' : INK, color: INK, w: 0.07,
+    const home = name === BASE;
+    d.dot(cx, cy, home ? (s.w > 100 ? 0.75 : 0.62)
+      : (s.w > 100 ? 0.55 : 0.45),
+    { fill: home ? '#ffffff' : INK, color: INK, w: home ? 0.1 : 0.07 });
+    d.text(cx + dx, cy + dy, name, {
+      size: fs,
+      align: anchor === 'end' ? 'r' : 'l',
+      halo: mm * 0.11,
     });
-    d.text(cx + dx, cy + dy, name,
-      { size: fs, align: anchor === 'end' ? 'r' : 'l' });
   }
   d.rect(x, y, w, h, { color: INK, w: 0.106 });
   return y + h;
@@ -478,9 +480,10 @@ function zoneList(d, s, x, y, w, free) {
 export function pTimeMap(d, s, p) {
   let y = heading(d, s, p.x, p.y, 'World time chart', 2);
   y = para(d, s, p.x, y + 0.4, p.w,
-    'Hours from UTC, read across. The ring marks the prime meridian.') + 1.6;
+    `Hours from UTC, read across. The ring marks ${BASE}, which the table `
+    + 'reads from.') + 1.6;
 
-  const fs = Math.max(3.0, Math.min(5.0, p.w / 24 / PT * 0.55));
+  const fs = Math.max(3.2, Math.min(5.4, p.w / 24 / PT * 0.6));
   for (let k = 0; k < 24; k += 1) {
     const off = k - 11;
     if (off % 2) continue;
@@ -496,87 +499,67 @@ export function pTimeMap(d, s, p) {
 }
 
 export function pTimeTable(d, s, p) {
-  const cs = cityList(s);
+  const cs = cityList();
+  const [bname, bshort, , , boff] = baseCity();
   const big = s.w > 100;
   let y = heading(d, s, p.x, p.y, 'What time is it where', 3);
   y = para(d, s, p.x, y + 0.4, p.w,
-    'Find the UTC hour on the left and read across.') + 1.6;
+    `Find the hour in the ${bname} column and read across.`) + 1.6;
 
-  const lab = big ? 13 : 10;
+  const lab = big ? 15 : 12;
   const colw = (p.w - lab) / cs.length;
-  const tiny = Math.max(3.2, s.small - (big ? 0.8 : 0.6));
-  const head = Math.max(3.0, s.small - 1.4);
+  const tblHead = big ? 7.0 : 5.5;
+  const rh = Math.max(2.8, (p.y + p.h - y - tblHead - 3) / 24);
+  // as large as both the column and the row allow, capped at body size
+  const fs = Math.max(3.2,
+    Math.min(s.base, (colw - 1.0) / 0.883, rh / PT * 0.55));
+  const head = Math.min(s.small, fs);
 
-  const wsRows = big ? 6 : 4;
-  const wsRh = big ? 6.4 : 4.8;
-  const wsHead = s.h3 * PT + 2.5;
-  const tblHead = big ? 5.0 : 4.0;
-  const free = p.y + p.h - y - tblHead - wsHead - wsRows * wsRh - 4;
-  const rh = Math.max(2.6, free / 24);
-
-  d.text(p.x, y + tblHead - 1.4, 'UTC', { font: 'helvB', size: head });
-  cs.forEach(([name, short, , , off], i) => {
-    const cx = p.x + lab + (i + 0.5) * colw;
-    const words = (big ? name : short).split(' ');
+  const col = (cx, name, off) => {
+    const words = name.split(' ');
     const lines = [];
     let cur = '';
-    for (const word of words) {
-      const t = cur ? `${cur} ${word}` : word;
+    for (const w of words) {
+      const t = cur ? `${cur} ${w}` : w;
       if (textWidth(t, 'helvB', head) > colw - 0.6 && cur) {
         lines.push(cur);
-        cur = word;
+        cur = w;
       } else cur = t;
     }
     if (cur) lines.push(cur);
     const lh = head * PT * 1.1;
     lines.forEach((ln, k) => {
-      d.text(cx, y + tblHead - 1.4 - (lines.length - k) * lh, ln,
-        { font: 'helvB', size: head, align: 'c' });
+      d.text(cx, y + tblHead - 1.6 - (lines.length - k) * lh, ln,
+        { font: 'helvB', size: head, align: cx === p.x ? 'l' : 'c' });
     });
-    d.text(cx, y + tblHead - 1.4, offsetLabel(off),
-      { size: head, color: '#777', align: 'c' });
+    d.text(cx, y + tblHead - 1.6, offsetLabel(off),
+      { size: head, color: '#777', align: cx === p.x ? 'l' : 'c' });
+  };
+
+  col(p.x, big ? bname : bshort, boff);
+  cs.forEach(([name, short, , , off], i) => {
+    col(p.x + lab + (i + 0.5) * colw, big ? name : short, off);
   });
+
   const top = y + tblHead;
   d.line(p.x, top, p.x + p.w, top, { color: INK, w: 0.212 });
 
-  for (let u = 0; u < 24; u += 1) {
-    const ry = top + u * rh;
-    if (u % 2) {
-      d.rect(p.x, ry, p.w, rh, { fill: '#f6f6f6', color: null });
-    }
+  for (let k = 0; k < 24; k += 1) {
+    const ry = top + k * rh;
+    if (k % 2) d.rect(p.x, ry, p.w, rh, { fill: '#f6f6f6', color: null });
     d.line(p.x, ry, p.x + p.w, ry, { color: '#dcdcdc', w: 0.106 });
-    const base = ry + rh / 2 + tiny * PT * 0.36;
-    d.text(p.x, base, `${String(u).padStart(2, '0')}:00`,
-      { font: 'helvB', size: tiny });
+    const base = ry + rh / 2 + fs * PT * 0.36;
+    d.text(p.x, base, clock(k - boff, boff), { font: 'helvB', size: fs });
     cs.forEach(([, , , , off], i) => {
-      const t = clock(u, off);
+      const t = clock(k - boff, off);
       const mark = t.startsWith('00') || t.startsWith('12');
       d.text(p.x + lab + (i + 0.5) * colw, base, t,
-        { size: tiny, align: 'c', font: mark ? 'helvB' : 'helv',
+        { size: fs, align: 'c', font: mark ? 'helvB' : 'helv',
           color: mark ? INK : '#444' });
     });
   }
-  let wy = top + 24 * rh;
-  d.line(p.x, wy, p.x + p.w, wy, { color: '#dcdcdc', w: 0.106 });
-  wy = heading(d, s, p.x, wy + 2.5, 'Your cities', 3);
-
-  const c2 = big ? 16 : 12;
-  const c3 = big ? 18 : 14;
-  const x2 = p.x + p.w - c2 - c3;
-  d.text(p.x, wy + s.small * PT, 'City', { size: s.small, color: '#666' });
-  d.text(x2 + c2 / 2, wy + s.small * PT, 'UTC',
-    { size: s.small, color: '#666', align: 'c' });
-  d.text(x2 + c2 + c3 / 2, wy + s.small * PT, 'Summer',
-    { size: s.small, color: '#666', align: 'c' });
-  let ry = wy + s.small * PT + 1.0;
-  d.line(p.x, ry, p.x + p.w, ry, { color: INK, w: 0.212 });
-  for (let i = 1; i <= wsRows; i += 1) {
-    d.line(p.x, ry + i * wsRh, p.x + p.w, ry + i * wsRh,
-      { color: '#cfcfcf', w: 0.141 });
-  }
-  for (const vx of [x2, x2 + c2]) {
-    d.line(vx, ry, vx, ry + wsRows * wsRh, { color: '#e8e8e8', w: 0.09 });
-  }
+  d.line(p.x, top + 24 * rh, p.x + p.w, top + 24 * rh,
+    { color: '#dcdcdc', w: 0.106 });
 }
 
 // ---------------------------------------------------------------- the guide

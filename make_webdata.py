@@ -22,7 +22,8 @@ JS = os.path.join("docs", "js")
 # every character the pages can print, mapped to its WinAnsi byte
 EXTRA = {"–": 0x96, "—": 0x97, "·": 0xb7, "×": 0xd7,
          "°": 0xb0, "…": 0x85, "’": 0x92, "“": 0x93,
-         "”": 0x94, "−": 0x96}
+         "”": 0x94, "−": 0x96, "ã": 0xe3, "é": 0xe9,
+         "á": 0xe1, "ú": 0xfa, "ö": 0xf6, "ü": 0xfc}
 
 FONTS = {"helv": "Helvetica", "helvB": "Helvetica-Bold",
          "times": "Times-Roman", "timesB": "Times-Bold",
@@ -45,14 +46,14 @@ def geometry():
             "export const SIZES = %s;\n\n"
             "export const A4 = %s;\n\n"
             "export const CITIES = %s;\n\n"
-            "export const SMALL_SET = %s;\n\n"
+            "export const BASE = %s;\n\n"
             "export const ZONES = %s;\n\n"
             "export const MONTHS = %s;\n\n"
             "export const DAYS = %s;\n"
             % (json.dumps(sizes, indent=1, sort_keys=True),
                json.dumps(a4, indent=1, sort_keys=True),
                json.dumps([list(c) for c in build_extras.CITIES]),
-               json.dumps(build_extras.SMALL_SET),
+               json.dumps(build_extras.BASE),
                json.dumps([list(z) for z in build_extras.ZONES]),
                json.dumps(["Jan", "Feb", "Mar", "Apr", "May", "Jun",
                            "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]),

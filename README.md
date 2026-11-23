@@ -58,11 +58,20 @@ the spare pages fall differently). Passport numbers in brackets:
 ### World time chart
 
 A two-page spread, and the build keeps it on facing pages — the map always
-lands on a left-hand page, inserting a blank before it if it would not. The
-left page carries an equirectangular map with the 24 hour bands behind it,
-dots for a handful of cities, and a line for every standard offset from −11 to
-+12 including the half and quarter hours. The right page converts all 24 UTC
-hours into nine cities (seven on passport) and leaves ruled space for your own.
+lands on a left-hand page, inserting a spare page before it if it would not.
+
+The left page carries an equirectangular map with the 24 hour bands behind it,
+seven cities, and a line for every standard offset from −11 to +12 including
+the half and quarter hours. City labels get a white halo so coastlines do not
+run through them.
+
+The right page is the conversion table, and it reads **from Delhi**: the
+left-hand column is Delhi's own 24 hours and the rest of each row is what the
+clock says in Los Angeles, New York, São Paulo, London, Paris and Dubai at
+that moment. The half-hours all down the other columns are the honest
+consequence of a base at +5:30. Change the city list and `BASE` at the top of
+the world-time section in `build_extras.py`, then rerun `make_webdata.py` so
+the browser version follows.
 
 Standard time only, and the page says so: half the world moves in summer and
 half does not.

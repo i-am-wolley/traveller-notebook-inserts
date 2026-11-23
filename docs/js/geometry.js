@@ -67,9 +67,9 @@ export const A4 = {
  }
 };
 
-export const CITIES = [["Los Angeles", "L.A.", -118.24, 34.05, -8.0, "end", -1.4, -0.8], ["New York", "N.Y.", -74.01, 40.71, -5.0, "end", -1.4, 2.6], ["London", "Lon", -0.13, 51.51, 0.0, "end", -1.6, -1.2], ["Paris", "Par", 2.35, 48.86, 1.0, "start", 2.2, 4.2], ["Dubai", "Dub", 55.27, 25.2, 4.0, "start", 1.6, 3.0], ["Delhi", "Del", 77.21, 28.61, 5.5, "start", 1.6, -1.4], ["Singapore", "Sing", 103.82, 1.35, 8.0, "end", -1.6, 2.8], ["Tokyo", "Tok", 139.69, 35.69, 9.0, "start", 1.6, -1.2], ["Sydney", "Syd", 151.21, -33.87, 10.0, "end", -1.6, 3.0]];
+export const CITIES = [["Los Angeles", "L.A.", -118.24, 34.05, -8.0, "start", 1.7, 3.0], ["New York", "N.Y.", -74.01, 40.71, -5.0, "start", 1.7, -1.6], ["S\u00e3o Paulo", "S.P.", -46.63, -23.55, -3.0, "start", 1.7, 2.4], ["London", "Lon", -0.13, 51.51, 0.0, "end", -1.6, -1.2], ["Paris", "Par", 2.35, 48.86, 1.0, "start", 2.4, 5.2], ["Dubai", "Dub", 55.27, 25.2, 4.0, "end", -1.6, 3.2], ["Delhi", "Del", 77.21, 28.61, 5.5, "start", 1.8, -1.4]];
 
-export const SMALL_SET = ["Los Angeles", "New York", "London", "Dubai", "Delhi", "Singapore", "Tokyo"];
+export const BASE = "Delhi";
 
 export const ZONES = [[-11, "Midway, Pago Pago"], [-10, "Honolulu, Papeete"], [-9, "Anchorage"], [-8, "Los Angeles, Vancouver"], [-7, "Denver, Phoenix"], [-6, "Chicago, Mexico City"], [-5, "New York, Toronto, Bogota"], [-4, "Halifax, Santiago, Caracas"], [-3, "Sao Paulo, Buenos Aires"], [-2, "South Georgia"], [-1, "Azores, Cabo Verde"], [0, "London, Lisbon, Accra, Reykjavik"], [1, "Paris, Berlin, Rome, Lagos"], [2, "Cairo, Athens, Johannesburg"], [3, "Moscow, Nairobi, Riyadh"], [3.5, "Tehran"], [4, "Dubai, Baku, Tbilisi"], [4.5, "Kabul"], [5, "Karachi, Tashkent"], [5.5, "Delhi, Mumbai, Colombo"], [5.75, "Kathmandu"], [6, "Dhaka, Almaty"], [6.5, "Yangon"], [7, "Bangkok, Jakarta, Hanoi"], [8, "Singapore, Beijing, Perth"], [9, "Tokyo, Seoul"], [9.5, "Adelaide, Darwin"], [10, "Sydney, Brisbane, Port Moresby"], [11, "Noumea, Honiara"], [12, "Auckland, Suva"]];
 

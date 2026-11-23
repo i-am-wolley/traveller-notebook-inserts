@@ -162,20 +162,22 @@ def sudoku_set(n, seed=SUDOKU_SEED):
 # ------------------------------------------------------- world time chart
 
 CITIES = [
-    # name, short, lon, lat, standard offset from UTC, anchor, label dx, dy
-    ("Los Angeles", "L.A.", -118.24, 34.05, -8.0, "end", -1.4, -0.8),
-    ("New York", "N.Y.", -74.01, 40.71, -5.0, "end", -1.4, 2.6),
+    # name, short, lon, lat, standard offset from UTC, anchor, label dx, dy.
+    # The nudges are hand-set to keep the labels off each other and off the
+    # map edge at the sizes actually used - check both sizes after changing
+    # the type size, because the labels grow with it.
+    ("Los Angeles", "L.A.", -118.24, 34.05, -8.0, "start", 1.7, 3.0),
+    ("New York", "N.Y.", -74.01, 40.71, -5.0, "start", 1.7, -1.6),
+    ("São Paulo", "S.P.", -46.63, -23.55, -3.0, "start", 1.7, 2.4),
     ("London", "Lon", -0.13, 51.51, 0.0, "end", -1.6, -1.2),
-    ("Paris", "Par", 2.35, 48.86, 1.0, "start", 2.2, 4.2),
-    ("Dubai", "Dub", 55.27, 25.20, 4.0, "start", 1.6, 3.0),
-    ("Delhi", "Del", 77.21, 28.61, 5.5, "start", 1.6, -1.4),
-    ("Singapore", "Sing", 103.82, 1.35, 8.0, "end", -1.6, 2.8),
-    ("Tokyo", "Tok", 139.69, 35.69, 9.0, "start", 1.6, -1.2),
-    ("Sydney", "Syd", 151.21, -33.87, 10.0, "end", -1.6, 3.0),
+    ("Paris", "Par", 2.35, 48.86, 1.0, "start", 2.4, 5.2),
+    ("Dubai", "Dub", 55.27, 25.20, 4.0, "end", -1.6, 3.2),
+    ("Delhi", "Del", 77.21, 28.61, 5.5, "start", 1.8, -1.4),
 ]
 
-SMALL_SET = ["Los Angeles", "New York", "London", "Dubai", "Delhi",
-             "Singapore", "Tokyo"]
+# the city the chart is read from: its column is the one on the left, and
+# every other time on the row is what the clock says there at that moment
+BASE = "Delhi"
 
 # one line per standard zone, with places that actually keep it
 ZONES = [
@@ -212,12 +214,16 @@ ZONES = [
 ]
 
 
+def base_city():
+    for c in CITIES:
+        if c[0] == BASE:
+            return c
+    return CITIES[0]
+
+
 def cities(s):
-    """The passport page has not the width for nine columns."""
-    if s["w"] > 100:
-        return CITIES
-    keep = set(SMALL_SET)
-    return [c for c in CITIES if c[0] in keep]
+    """Every city except the base, which gets the left-hand column."""
+    return [c for c in CITIES if c[0] != BASE]
 
 
 def _offset(v):
@@ -270,20 +276,26 @@ def _world_map(s, w):
              "stroke-width='0.22' stroke-linejoin='round'/>"
              % (" ".join(land), INK))
 
-    fs = 2.3 if s["w"] > 100 else 1.9
+    fs = 2.6 if s["w"] > 100 else 2.1
     dots = []
-    for name, short, lon, lat, off, anchor, dx, dy in cities(s):
+    for name, short, lon, lat, off, anchor, dx, dy in CITIES:
         x = (lon + 180) * sx
         y = (90 - lat) * sy
-        ring = abs(off) < 0.01
+        base = name == BASE
+        # the base city is a ring, so it reads as the one you count from
         dots.append("<circle cx='%.2f' cy='%.2f' r='%.2f' fill='%s' "
-                    "stroke='%s' stroke-width='0.2'/>"
-                    % (x, y, 0.55 if s["w"] > 100 else 0.45,
-                       "#ffffff" if ring else INK, INK))
+                    "stroke='%s' stroke-width='%.2f'/>"
+                    % (x, y, (0.75 if base else 0.55) if s["w"] > 100
+                       else (0.62 if base else 0.45),
+                       "#ffffff" if base else INK, INK,
+                       0.3 if base else 0.2))
+        # a white halo under the label, so coastlines do not run through it
         dots.append("<text x='%.2f' y='%.2f' font-size='%.2f' fill='%s' "
+                    "stroke='#ffffff' stroke-width='%.2f' "
+                    "stroke-linejoin='round' paint-order='stroke' "
                     "text-anchor='%s' font-family=\"Helvetica Neue, Arial, "
                     "sans-serif\">%s</text>"
-                    % (x + dx, y + dy, fs, INK, anchor, name))
+                    % (x + dx, y + dy, fs, INK, fs * 0.22, anchor, name))
     return ("<svg viewBox='0 0 %.3f %.3f' width='%.3fmm' height='%.3fmm' "
             "xmlns='http://www.w3.org/2000/svg' style='display:block'>"
             "<rect x='0' y='0' width='%.3f' height='%.3f' fill='#fafafa'/>"
@@ -341,7 +353,8 @@ def p_timezone_map(s):
     free = padh(s) - head - w / 2.0 - 12.0
     return ("<h2>World time chart</h2>"
             "<p class='sub' style='margin-bottom:2mm'>Hours from UTC, read "
-            "across. The ring marks the prime meridian.</p>"
+            "across. The ring marks %s, which the table reads from.</p>"
+            % BASE
             + _scale(s, w) + _world_map(s, w) +
             "<p class='sub' style='margin:1.6mm 0 1.4mm'>Standard time. Much "
             "of Europe and North America goes an hour forward in summer; "
@@ -350,46 +363,52 @@ def p_timezone_map(s):
 
 
 def p_timezone_table(s):
-    """Spread, right page: the conversion table and room for your own cities.
+    """Spread, right page: every hour of the day, read from the base city.
 
-    Every row heights itself from what is left on the page, so the table and
-    the worksheet together reach the foot without a gap.
+    The left column is Delhi, because that is where the owner reads the clock
+    from; the rest of the row is what the clock says in each other city at
+    that moment. Half-hour times in the other columns are the honest
+    consequence of a base at +5:30.
     """
     cs = cities(s)
+    bname, bshort, _blon, _blat, boff, _a, _dx, _dy = base_city()
     big = s["w"] > 100
-    lab = 13 if big else 10
+    lab = 15 if big else 12
     colw = (padw(s) - lab) / float(len(cs))
-    tiny = max(3.2, s["small"] - (0.8 if big else 0.6))
-    head = max(3.0, s["small"] - 1.4)
 
-    ws_rows = 6 if big else 4
-    ws_rh = 6.4 if big else 4.8
-    fixed = (s["h3"] * 0.353 + s["small"] * 0.353 * 1.4 + 3      # page heading
-             + (5.0 if big else 4.0)                            # table header
-             + s["h3"] * 0.353 + 2.5                            # worksheet head
-             + ws_rows * ws_rh + 4)
-    rh = max(2.6, (padh(s) - fixed) / 24.0)
+    head_mm = s["h3"] * 0.353 + s["small"] * 0.353 * 1.4 + 3
+    tbl_head = 7.0 if big else 5.5
+    rh = max(2.8, (padh(s) - head_mm - tbl_head - 3) / 24.0)
+
+    # as large as both the column and the row allow, capped at body size.
+    # "00:00" is about 2.5 em of Helvetica, hence the 0.883 mm per point
+    fs = min(s["base"], (colw - 1.0) / 0.883, rh / 0.3528 * 0.55)
+    fs = max(3.2, fs)
+    head = min(s["small"], fs)
 
     hdr = ["<td style='border-bottom:0.6pt solid %s;font-size:%.2fpt;"
-           "font-weight:700;padding-bottom:.6mm'>UTC</td>" % (INK, head)]
+           "font-weight:700;padding-bottom:.8mm;line-height:1.1'>%s"
+           "<div style='font-weight:400;color:#777'>%s</div></td>"
+           % (INK, head, bname if big else bshort, _offset(boff))]
     for name, short, lon, lat, off, a, dx, dy in cs:
         hdr.append("<td style='border-bottom:0.6pt solid %s;text-align:center;"
-                   "font-size:%.2fpt;font-weight:700;padding:0 .3mm .6mm;"
+                   "font-size:%.2fpt;font-weight:700;padding:0 .3mm .8mm;"
                    "line-height:1.1'>%s<div style='font-weight:400;color:#777'>"
                    "%s</div></td>"
                    % (INK, head, name if big else short, _offset(off)))
 
     rows = []
-    for u in range(24):
+    for k in range(24):
+        here = _clock(k - boff, boff)         # the base city's own whole hours
         tds = ["<td style='font-size:%.2fpt;font-weight:700;height:%.2fmm'>"
-               "%02d:00</td>" % (tiny, rh, u)]
+               "%s</td>" % (fs, rh, here)]
         for name, short, lon, lat, off, a, dx, dy in cs:
-            t = _clock(u, off)
+            t = _clock(k - boff, off)
             mark = t.startswith("00") or t.startswith("12")
             tds.append("<td style='text-align:center;font-size:%.2fpt;%s'>%s"
                        "</td>"
-                       % (tiny, "font-weight:700" if mark else "color:#444", t))
-        shade = " background:#f6f6f6;" if u % 2 else ""
+                       % (fs, "font-weight:700" if mark else "color:#444", t))
+        shade = " background:#f6f6f6;" if k % 2 else ""
         rows.append("<tr style='border-top:0.3pt solid #dcdcdc;%s'>%s</tr>"
                     % (shade, "".join(tds)))
 
@@ -399,23 +418,6 @@ def p_timezone_table(s):
              % (lab, "<col style='width:%.2fmm'>" % colw * len(cs),
                 "".join(hdr), "".join(rows)))
 
-    own = "".join(
-        "<tr><td style='border-bottom:0.4pt solid #cfcfcf;height:%.2fmm'></td>"
-        "<td style='border-bottom:0.4pt solid #cfcfcf'></td>"
-        "<td style='border-bottom:0.4pt solid #cfcfcf'></td></tr>" % ws_rh
-        for _ in range(ws_rows))
-    worksheet = ("<h3 style='margin-top:2.5mm'>Your cities</h3>"
-                 "<table class='g' style='width:100%%;table-layout:fixed'>"
-                 "<colgroup><col><col style='width:%smm'>"
-                 "<col style='width:%smm'></colgroup>"
-                 "<tr><td class='sub' style='border-bottom:0.6pt solid %s'>"
-                 "City</td><td class='sub' style='border-bottom:0.6pt solid %s;"
-                 "text-align:center'>UTC</td><td class='sub' style='"
-                 "border-bottom:0.6pt solid %s;text-align:center'>Summer</td>"
-                 "</tr>%s</table>"
-                 % (16 if big else 12, 18 if big else 14,
-                    INK, INK, INK, own))
-
     return ("<h3>What time is it where</h3>"
-            "<p class='sub' style='margin-bottom:1.6mm'>Find the UTC hour on "
-            "the left and read across.</p>" + table + worksheet)
+            "<p class='sub' style='margin-bottom:1.6mm'>Find the hour in the "
+            "%s column and read across.</p>%s" % (bname, table))

@@ -140,14 +140,21 @@ class PdfPage {
     const font = o.font || 'helv';
     const size = o.size || 7;
     this.fonts.add(font);
-    this._col(o.color || INK, false);
     const dx = alignShift(str, font, size, o.align);
     const bytes = codes(str).map(esc).join('');
     // the page CTM is in millimetres, so the point size converts across; the
     // -1 in the text matrix cancels that CTM's y flip
-    this.ops.push(
-      `BT /${font} ${f(size / MM)} Tf 1 0 0 -1 ${f(x + dx)} ${f(y)} Tm ` +
-      `(${bytes}) Tj ET`);
+    const place = `1 0 0 -1 ${f(x + dx)} ${f(y)} Tm (${bytes}) Tj`;
+    if (o.halo) {
+      // a fattened white copy underneath, so map labels stay legible where
+      // a coastline runs through them. Tr 2 is fill then stroke.
+      this.ops.push(
+        `q 1 1 1 rg 1 1 1 RG ${f(o.halo * MM)} w 1 j 1 J ` +
+        `BT 2 Tr /${font} ${f(size / MM)} Tf ${place} ET Q`);
+      this._reset();
+    }
+    this._col(o.color || INK, false);
+    this.ops.push(`BT /${font} ${f(size / MM)} Tf ${place} ET`);
   }
 
   save() { this.ops.push('q'); this._reset(); }
@@ -335,10 +342,17 @@ export class CanvasSurface {
     c.font = `${font.endsWith('B') ? '700 ' : ''}${size}px ` +
       (serif ? 'Georgia, "Times New Roman", serif'
         : '"Helvetica Neue", Arial, sans-serif');
-    c.fillStyle = o.color || INK;
     // measure with the PDF metrics, so preview and print break the same way
-    c.fillText(str, (x + alignShift(str, font, o.size || 7, o.align)) * this.k,
-      y * this.k);
+    const px = (x + alignShift(str, font, o.size || 7, o.align)) * this.k;
+    if (o.halo) {
+      c.strokeStyle = '#ffffff';
+      c.lineWidth = o.halo * 2 * this.k;
+      c.lineJoin = 'round';
+      c.setLineDash([]);
+      c.strokeText(str, px, y * this.k);
+    }
+    c.fillStyle = o.color || INK;
+    c.fillText(str, px, y * this.k);
   }
 
   save() { this.ctx.save(); }
